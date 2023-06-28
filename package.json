@@ -1,0 +1,14 @@
+{
+  "name": "methuselahbot",
+  "version": "1.0.0",
+  "description": "Methuselah bot for the TLD Discord server.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ondřej Schlaichert",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.11.0"
+  }
+}
