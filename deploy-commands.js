@@ -5,15 +5,12 @@ const { clientId, guildId, token } = require('./config.json');
 const fs = require('node:fs');
 const path = require('node:path');
 
-// If global is passed to the script, this value will be true.
 const isGlobal = process.argv.slice(2)[0] == 'global';
 
 const commands = [];
-// Grab all the command files from the commands directory you created earlier
 const commandsPath = isGlobal ? path.join(__dirname, 'commands', 'global') : path.join(__dirname, 'commands', 'guild');
 
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
-// Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
 for (const file of commandFiles) {
 	const filePath = path.join(commandsPath, file);
 	const command = require(filePath);
@@ -25,13 +22,11 @@ for (const file of commandFiles) {
 	}
 }
 
-// Construct and prepare an instance of the REST module
 const rest = new REST().setToken(token);
 
-// and deploy your commands!
 (async () => {
 	try {
-		console.log(`Started refreshing ${commands.length} application (/) ${isGlobal ? 'global' : 'guild'} commands.`);
+		console.log(`[OK] Started refreshing ${commands.length} application (/) ${isGlobal ? 'global' : 'guild'} commands.`);
 
 		let data;
 		// The put method is used to fully refresh all commands in the guild with the current set
@@ -48,10 +43,10 @@ const rest = new REST().setToken(token);
 			);
 		}
 
-		console.log(`Successfully reloaded ${data.length} application (/) ${isGlobal ? 'global' : 'guild'} commands.`);
+		console.log(`[SUCCESS] Successfully reloaded ${data.length} application (/) ${isGlobal ? 'global' : 'guild'} commands.`);
 	}
 	catch (error) {
-		// And of course, make sure you catch and log any errors!
+		console.error('[ERROR] There has been an issue refreshing a command.');
 		console.error(error);
 	}
 })();

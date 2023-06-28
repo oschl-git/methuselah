@@ -9,7 +9,8 @@ module.exports = {
 				.setName('content')
 				.setDescription('The content of the echoed message.')
 				.setRequired(true))
-		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+		.setDMPermission(false),
 	async execute(interaction) {
 		const content = interaction.options.getString('content') ?? null;
 

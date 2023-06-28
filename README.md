@@ -10,10 +10,7 @@ Methuselah is a custom bot for the The Long Dark Discord server.
 {
 	"token": "<token here>",
 	"clientId": "<client it>",
-	"guildId": "<guild id>",
-	"welcomeChannels": [
-		<array of channels IDs in which the bot welcomes people>
-	]
+	"guildId": "<guild id>"
 }
 ```
 Make sure to never share this file with anyone and put it in your `.gitignore`.
