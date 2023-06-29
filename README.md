@@ -8,9 +8,9 @@ Methuselah is a custom bot for the The Long Dark Discord server.
 - To work correctly, the bot needs to have a config.json file in the project folder. It needs to be of the following format:
 ```
 {
-	"token": "<token here>",
-	"clientId": "<client it>",
-	"guildId": "<guild id>"
+	"token": "<token>",
+	"clientId": "<application ID>",
+	"guildId": "<server ID>"
 }
 ```
 Make sure to never share this file with anyone and put it in your `.gitignore`.
