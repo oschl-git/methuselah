@@ -31,11 +31,16 @@ module.exports = {
 			return;
 		}
 
-		permamessageMap.set(interaction.channelId, content);
+		const channel = interaction.guild.channels.cache.get(interaction.channelId);
+		let sentMessage = await channel.send(content);
+
+		permamessageMap.set(interaction.channelId, {
+			content: content,
+			sentMessageId: sentMessage.id,
+		});
+
 		permamessages.savePermamessageMapToJson(permamessageMap);
 
-		const channel = interaction.guild.channels.cache.get(interaction.channelId);
-		channel.send(content);
-		await interaction.reply({ content: 'Permamessage set!', ephemeral: true });
+		interaction.reply({ content: 'Permamessage set!', ephemeral: true });
 	},
 };
