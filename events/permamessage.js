@@ -8,6 +8,7 @@ module.exports = {
 		let permamessageMap = permamessages.getPermamessageMapFromJson();
 
 		if (!permamessageMap.has(message.channelId)) return;
+		if (message.author.id == clientId) return;
 
 		let lastMessageId = permamessageMap.get(message.channelId).sentMessageId;
 		let lastMessage;
@@ -24,10 +25,8 @@ module.exports = {
 			});
 		}
 
-		if (message.author.id != clientId) {
-			let sentMessage = await message.channel.send(permamessageMap.get(message.channelId).content);
-			permamessageMap.get(message.channelId).sentMessageId = sentMessage.id;
-			permamessages.savePermamessageMapToJson(permamessageMap);
-		}
+		let sentMessage = await message.channel.send(permamessageMap.get(message.channelId).content);
+		permamessageMap.get(message.channelId).sentMessageId = sentMessage.id;
+		permamessages.savePermamessageMapToJson(permamessageMap);
 	}
 };
