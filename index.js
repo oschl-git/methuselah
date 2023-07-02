@@ -14,37 +14,67 @@ const client = new Client({
 	]
 });
 
-client.commands = new Collection();
-const foldersPath = path.join(__dirname, 'commands');
-const commandFolders = fs.readdirSync(foldersPath);
+createMissingFiles();
+setupCommands();
+setupEvents();
+client.login(token);
 
-for (const folder of commandFolders) {
-	const commandsPath = path.join(foldersPath, folder);
-	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
-	for (const file of commandFiles) {
-		const filePath = path.join(commandsPath, file);
-		const command = require(filePath);
-		if ('data' in command && 'execute' in command) {
-			client.commands.set(command.data.name, command);
+
+function createMissingFiles() {
+	const filePaths = [
+		{ path: 'data/permamessages.json', iterable: false },
+		{ path: 'data/welcomeChannels.json', iterable: true },
+	];
+
+	for (const filePath of filePaths) {
+		if (!fs.existsSync(filePath.path)) {
+			fs.mkdirSync(path.dirname(filePath.path), { recursive: true });
+
+			try {
+				fs.writeFileSync(filePath.path, filePath.iterable ? '[]' : '{}');
+			}
+			catch (error) {
+				console.error('[CRITICAL] Failed creating required files.');
+				console.error(error);
+				throw error;
+			}
+		}
+	}
+}
+
+function setupCommands() {
+	client.commands = new Collection();
+	const foldersPath = path.join(__dirname, 'commands');
+	const commandFolders = fs.readdirSync(foldersPath);
+
+	for (const folder of commandFolders) {
+		const commandsPath = path.join(foldersPath, folder);
+		const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+		for (const file of commandFiles) {
+			const filePath = path.join(commandsPath, file);
+			const command = require(filePath);
+			if ('data' in command && 'execute' in command) {
+				client.commands.set(command.data.name, command);
+			}
+			else {
+				console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+			}
+		}
+	}
+};
+
+function setupEvents() {
+	const eventsPath = path.join(__dirname, 'events');
+	const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
+
+	for (const file of eventFiles) {
+		const filePath = path.join(eventsPath, file);
+		const event = require(filePath);
+		if (event.once) {
+			client.once(event.name, (...args) => event.execute(...args));
 		}
 		else {
-			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+			client.on(event.name, (...args) => event.execute(...args));
 		}
 	}
-}
-
-const eventsPath = path.join(__dirname, 'events');
-const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
-
-for (const file of eventFiles) {
-	const filePath = path.join(eventsPath, file);
-	const event = require(filePath);
-	if (event.once) {
-		client.once(event.name, (...args) => event.execute(...args));
-	}
-	else {
-		client.on(event.name, (...args) => event.execute(...args));
-	}
-}
-
-client.login(token);
+};

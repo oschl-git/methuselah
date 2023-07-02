@@ -1,5 +1,5 @@
 const { Events } = require('discord.js');
-const welcomeChannels = require('./../command_config/welcomeChannels.json');
+const welcomeChannels = require('./../data/welcomeChannels.json');
 const quotes = require('./../command_config/welcomeQuotes.json');
 
 module.exports = {
@@ -10,10 +10,17 @@ module.exports = {
 			`**${member} just joined the server.**`
 		);
 
-		for (const channelId of welcomeChannels) {
-			const channel = member.guild.channels.cache.get(channelId);
-			if (channel == null) continue;
-			channel.send(message);
+		try {
+			for (const channelId of welcomeChannels) {
+				const channel = member.guild.channels.cache.get(channelId);
+				if (channel == null) continue;
+				channel.send(message);
+			}
+		}
+		catch {
+			console.error('[CRITICAL] Failed iterating through welcomeChannels JSON. Exiting...');
+			console.error(error);
+			throw error;
 		}
 	},
 };

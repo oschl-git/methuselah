@@ -1,27 +1,23 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const jsonPath = '../command_config/permamessages.json';
+const jsonPath = '../data/permamessages.json';
 
 const getPermamessageMapFromJson = () => {
 	let data;
 	const filePath = path.join(__dirname, jsonPath);
 
-	if (fs.existsSync(filePath)) {
-		try {
-			data = fs.readFileSync(filePath);
-		}
-		catch (error) {
-			console.error('[CRITICAL] Failed reading permamessage JSON. Exiting...');
-			console.error(error);
-			throw error;
-		}
+	try {
+		data = fs.readFileSync(filePath);
 	}
-	else {
-		data = new Map();
+	catch (error) {
+		console.error('[CRITICAL] Failed reading permamessage JSON. Exiting...');
+		console.error(error);
+		throw error;
 	}
 
-	return new Map(Object.entries(JSON.parse(data)));
+	if (data === '{}') return new Map();
+	else return new Map(Object.entries(JSON.parse(data)));
 };
 
 const savePermamessageMapToJson = (permamessageMap) => {
