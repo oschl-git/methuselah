@@ -19,12 +19,12 @@ module.exports = {
 		const number = interaction.options.getNumber('number') ?? null;
 
 		if (number == null) {
-			await interaction.reply({ content: 'No number provided.', ephemeral: true });
+			await interaction.reply({ content: '**✕ no number provided.**', ephemeral: true });
 			return;
 		}
 
 		if (number > rules.length || number < 1) {
-			await interaction.reply({ content: 'No such rule.', ephemeral: true });
+			await interaction.reply({ content: '**✕ no such rule.**', ephemeral: true });
 			return;
 		}
 

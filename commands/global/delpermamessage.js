@@ -15,7 +15,7 @@ module.exports = {
 		if (!permamessageMap.has(interaction.channelId)) {
 			await interaction.reply({
 				content:
-					'This channel doesn\'t have a permamessage.'
+					'**✕ this channel doesn\'t have a permamessage.**'
 				, ephemeral: true
 			});
 			return;
@@ -24,6 +24,6 @@ module.exports = {
 		permamessageMap.delete(interaction.channelId);
 		permamessages.savePermamessageMapToJson(permamessageMap);
 
-		await interaction.reply({ content: 'Permamessage successfully disabled.', ephemeral: true });
+		await interaction.reply({ content: '**✓ permamessage successfully disabled.', ephemeral: true });
 	},
 };

@@ -15,7 +15,7 @@ module.exports = {
 		if (welcomeChannelArray.includes(interaction.channelId)) {
 			await interaction.reply({
 				content:
-					'This channel is already a welcome channel.'
+					'**✕ this channel is already a welcome channel.**'
 				, ephemeral: true
 			});
 			return;
@@ -25,6 +25,6 @@ module.exports = {
 
 		welcomeChannels.saveWelcomeChannelsToJson(welcomeChannelArray);
 
-		interaction.reply({ content: 'Welcome channel set!', ephemeral: true });
+		interaction.reply({ content: '**✓ welcome channel set!**', ephemeral: true });
 	},
 };

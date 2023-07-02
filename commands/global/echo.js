@@ -17,12 +17,12 @@ module.exports = {
 		const content = interaction.options.getString('content') ?? null;
 
 		if (content == null) {
-			await interaction.reply({ content: 'No content provided.', ephemeral: true });
+			await interaction.reply({ content: '**✕ no content provided.**', ephemeral: true });
 			return;
 		}
 
 		const channel = interaction.guild.channels.cache.get(interaction.channelId);
 		channel.send(content);
-		await interaction.reply({ content: 'Done!', ephemeral: true });
+		await interaction.reply({ content: '**✓ done!**', ephemeral: true });
 	},
 };

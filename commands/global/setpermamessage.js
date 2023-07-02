@@ -18,7 +18,7 @@ module.exports = {
 		const content = interaction.options.getString('content') ?? null;
 
 		if (content == null) {
-			await interaction.reply({ content: 'No content provided.', ephemeral: true });
+			await interaction.reply({ content: '**✕ no content provided.**', ephemeral: true });
 			return;
 		}
 
@@ -27,7 +27,7 @@ module.exports = {
 		if (permamessageMap.has(interaction.channelId)) {
 			await interaction.reply({
 				content:
-					'This channel already has a permamessage. Use /delpermamessage first to replace it.'
+					'**✕ this channel already has a permamessage. Use /delpermamessage first to replace it.**'
 				, ephemeral: true
 			});
 			return;
@@ -43,6 +43,6 @@ module.exports = {
 
 		permamessages.savePermamessageMapToJson(permamessageMap);
 
-		interaction.reply({ content: 'Permamessage set!', ephemeral: true });
+		interaction.reply({ content: '**✓ permamessage set!**', ephemeral: true });
 	},
 };
