@@ -1,10 +1,10 @@
 {
-  "name": "methuselahbot",
-  "version": "1.0.0",
-  "description": "Methuselah bot for the TLD Discord server.",
+  "name": "methuselah",
+  "version": "0.0.2",
+  "description": "a custom bot for the The Long Dark Discord server.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ."
   },
   "author": "Ondřej Schlaichert",
   "license": "ISC",
