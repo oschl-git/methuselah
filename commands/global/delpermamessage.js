@@ -24,6 +24,6 @@ module.exports = {
 		permamessageMap.delete(interaction.channelId);
 		permamessages.savePermamessageMapToJson(permamessageMap);
 
-		await interaction.reply({ content: '**✓ permamessage successfully disabled.', ephemeral: true });
+		await interaction.reply({ content: '**✓ permamessage successfully disabled.**', ephemeral: true });
 	},
 };
