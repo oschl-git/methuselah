@@ -10,7 +10,9 @@ module.exports = {
 	async execute(interaction) {
 		console.log(`[LOG] @${interaction.user.username} used the /ping command.`);
 
-		interaction.reply(`*Ho, ${interaction.user}! So you're still alive.*\n` +
-			`\`version: ${version}\``);
+		const message = `*Ho, ${interaction.user}! So you're still alive.*\n` +
+			`\`version: ${version}\``;
+
+		interaction.reply({ content: message, ephemeral: true });
 	},
 };
