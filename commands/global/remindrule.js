@@ -40,6 +40,11 @@ module.exports = {
 };
 
 const getEmoji = (name, client) => {
-	const id = client.guild.emojis.cache.find(emoji => emoji.name === name).id;
-	return `<:${name}:${id}>`;
+	try {
+		const id = client.guild.emojis.cache.find(emoji => emoji.name === name).id;
+		return `<:${name}:${id}>`;
+	}
+	catch {
+		return '';
+	}
 };
