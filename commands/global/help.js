@@ -12,7 +12,7 @@ module.exports = {
 		let text;
 
 		try {
-			text = fs.readFileSync('command_config/help.txt').toString();
+			text = fs.readFileSync('command_config/help.md').toString();
 			interaction.reply({ content: text, ephemeral: true });
 		}
 		catch (e) {
