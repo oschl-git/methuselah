@@ -6,6 +6,6 @@ module.exports = {
 		.setDescription('A simple testing command.')
 		.setDMPermission(true),
 	async execute(interaction) {
-		await interaction.reply(`*Ho, ${interaction.member}! So you're still alive.*`);
+		interaction.reply(`*Ho, ${interaction.member}! So you're still alive.*`);
 	},
 };
