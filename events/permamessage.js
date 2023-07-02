@@ -10,6 +10,8 @@ module.exports = {
 		if (!permamessageMap.has(message.channelId)) return;
 		if (message.author.id == clientId) return;
 
+		console.log(`[LOG] @${message.author.username} triggered permamessage.`);
+
 		let lastMessageId = permamessageMap.get(message.channelId).sentMessageId;
 		let lastMessage;
 		lastMessage = await message.channel.messages.fetch(lastMessageId).catch(e => {

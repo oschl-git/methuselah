@@ -7,6 +7,8 @@ module.exports = {
 		.setDescription('Displays information about the bot and its capabilities.')
 		.setDMPermission(true),
 	async execute(interaction) {
+		console.log(`[LOG] @${interaction.user.username} used the /help command.`);
+
 		let text;
 
 		try {

@@ -5,6 +5,8 @@ const quotes = require('./../command_config/welcomeQuotes.json');
 module.exports = {
 	name: Events.GuildMemberAdd,
 	async execute(member) {
+		console.log(`[LOG] @${member.user.username} joined a server, triggered memberJoin.`);
+
 		const message = (
 			`${getEmoji('methuselah', member)} *${getRandomQuote()}${'*\n'}` +
 			`**${member} just joined the server.**`

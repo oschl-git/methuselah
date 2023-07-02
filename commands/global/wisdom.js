@@ -9,6 +9,8 @@ module.exports = {
 		.setDescription('Gives you lifechanging wisdoms.')
 		.setDMPermission(true),
 	async execute(interaction) {
+		console.log(`[LOG] @${interaction.user.username} used the /wisdom command.`);
+
 		const message = (
 			`${getEmoji('methuselah', interaction)} *${getRandomWisdom()}*`
 		);

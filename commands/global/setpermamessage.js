@@ -13,6 +13,8 @@ module.exports = {
 		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.setDMPermission(false),
 	async execute(interaction) {
+		console.log(`[LOG] @${interaction.user.username} used the /setpermamessage command.`);
+
 		const content = interaction.options.getString('content') ?? null;
 
 		if (content == null) {

@@ -6,6 +6,8 @@ module.exports = {
 		.setDescription('A simple testing command.')
 		.setDMPermission(true),
 	async execute(interaction) {
-		interaction.reply(`*Ho, ${interaction.member}! So you're still alive.*`);
+		console.log(`[LOG] @${interaction.user.username} used the /ping command.`);
+
+		interaction.reply(`*Ho, ${interaction.user}! So you're still alive.*`);
 	},
 };

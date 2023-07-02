@@ -8,6 +8,8 @@ module.exports = {
 		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.setDMPermission(false),
 	async execute(interaction) {
+		console.log(`[LOG] @${interaction.user.username} used the /delpermamessage command.`);
+
 		let permamessageMap = permamessages.getPermamessageMapFromJson();
 
 		if (!permamessageMap.has(interaction.channelId)) {

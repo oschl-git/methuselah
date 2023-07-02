@@ -14,6 +14,8 @@ module.exports = {
 				.setDescription('Number of the rule.')
 				.setRequired(true)),
 	async execute(interaction) {
+		console.log(`[LOG] @${interaction.user.username} used the /remindrule command.`);
+
 		const number = interaction.options.getNumber('number') ?? null;
 
 		if (number == null) {
