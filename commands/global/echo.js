@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 
 module.exports = {
+	cooldown: 1,
 	data: new SlashCommandBuilder()
 		.setName('echo')
 		.setDescription('Repeats whatever you write.')

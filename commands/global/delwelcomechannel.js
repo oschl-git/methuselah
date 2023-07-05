@@ -2,6 +2,7 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const welcomeChannels = require('../../helper_scripts/welcomeChannels.js');
 
 module.exports = {
+	cooldown: 10,
 	data: new SlashCommandBuilder()
 		.setName('delwelcomechannel')
 		.setDescription('Unset this channel as a welcome channel.')

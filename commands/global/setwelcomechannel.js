@@ -2,6 +2,7 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const welcomeChannels = require('../../helper_scripts/welcomeChannels.js');
 
 module.exports = {
+	cooldown: 10,
 	data: new SlashCommandBuilder()
 		.setName('setwelcomechannel')
 		.setDescription('Set this channel as a welcome channel. Methuselah will welcome people who join here.')

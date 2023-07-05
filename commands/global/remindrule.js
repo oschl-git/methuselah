@@ -4,6 +4,7 @@ const path = require('node:path');
 const rules = require(path.join(__dirname, '../../command_config/rules.json'));
 
 module.exports = {
+	cooldown: 1,
 	data: new SlashCommandBuilder()
 		.setName('remindrule')
 		.setDescription('Writes a server rule.')

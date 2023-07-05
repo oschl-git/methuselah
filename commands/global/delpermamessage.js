@@ -2,6 +2,7 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const permamessages = require('../../helper_scripts/permamessages.js');
 
 module.exports = {
+	cooldown: 10,
 	data: new SlashCommandBuilder()
 		.setName('delpermamessage')
 		.setDescription('Delete this channel\'s permamessage.')

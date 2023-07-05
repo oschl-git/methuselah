@@ -2,6 +2,7 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const fs = require('node:fs');
 
 module.exports = {
+	cooldown: 1,
 	data: new SlashCommandBuilder()
 		.setName('adminhelp')
 		.setDescription('Displays information about features for administrators.')

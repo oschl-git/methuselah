@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const fs = require('node:fs');
 
 module.exports = {
+	cooldown: 1,
 	data: new SlashCommandBuilder()
 		.setName('help')
 		.setDescription('Displays information about the bot and its capabilities.')

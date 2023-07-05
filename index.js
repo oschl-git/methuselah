@@ -14,6 +14,9 @@ const client = new Client({
 	]
 });
 
+client.cooldowns = new Collection();
+client.sentPermamessages = new Collection();
+
 createMissingFiles();
 setupCommands();
 setupEvents();
