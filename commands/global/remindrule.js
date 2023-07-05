@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, Colors } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 const rules = require(path.join(__dirname, '../../command_config/rules.json'));
@@ -20,23 +20,28 @@ module.exports = {
 		const number = interaction.options.getNumber('number') ?? null;
 
 		if (number == null) {
-			await interaction.reply({ content: '**✕ no number provided.**', ephemeral: true });
+			const embed = new EmbedBuilder()
+				.setDescription('**✕** no number provided..')
+				.setColor(Colors.Red);
+			interaction.reply({ embeds: [embed], ephemeral: true });
 			return;
 		}
 
 		if (number > rules.length || number < 1) {
-			await interaction.reply({ content: '**✕ no such rule.**', ephemeral: true });
+			const embed = new EmbedBuilder()
+				.setDescription('**✕** no such rule.')
+				.setColor(Colors.Red);
+			interaction.reply({ embeds: [embed], ephemeral: true });
 			return;
 		}
 
 		const rule = rules[number - 1];
 
-		const message = (
-			`${getEmoji('methuselah', interaction)} *Remember rule ${number}...*\n` +
-			`> ${rule}`
-		);
+		const message = (`${getEmoji('methuselah', interaction)} *Remember rule ${number}...*\n`);
 
-		interaction.reply(message);
+		const embed = new EmbedBuilder().setDescription(rule);
+
+		interaction.reply({ content: message, embeds: [embed] });
 	},
 };
 

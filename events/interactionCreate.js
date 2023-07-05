@@ -1,4 +1,4 @@
-const { Events, Collection } = require('discord.js');
+const { Events, Collection, EmbedBuilder, Colors } = require('discord.js');
 
 module.exports = {
 	name: Events.InteractionCreate,
@@ -26,11 +26,11 @@ module.exports = {
 			const expirationTime = timestamps.get(interaction.user.id) + cooldownAmount;
 
 			if (now < expirationTime) {
-				return interaction.reply(
-					{
-						content: `**✕ command on cooldown. Try again in a few seconds.**`,
-						ephemeral: true
-					});
+				const embed = new EmbedBuilder()
+					.setDescription(':clock4: command on cooldown, try again in a few seconds.')
+					.setColor(Colors.Orange);
+				interaction.reply({ embeds: [embed], ephemeral: true });
+				return;
 			}
 		}
 

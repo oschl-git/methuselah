@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, Colors } = require('discord.js');
 const permamessages = require('../../helper_scripts/permamessages.js');
 
 module.exports = {
@@ -14,17 +14,19 @@ module.exports = {
 		let permamessageMap = permamessages.getPermamessageMapFromJson();
 
 		if (!permamessageMap.has(interaction.channelId)) {
-			await interaction.reply({
-				content:
-					'**✕ this channel doesn\'t have a permamessage.**'
-				, ephemeral: true
-			});
+			const embed = new EmbedBuilder()
+				.setDescription('**✕** this channel doesn\'t have a permamessage.')
+				.setColor(Colors.Red);
+			interaction.reply({ embeds: [embed], ephemeral: true });
 			return;
 		}
 
 		permamessageMap.delete(interaction.channelId);
 		permamessages.savePermamessageMapToJson(permamessageMap);
 
-		await interaction.reply({ content: '**✓ permamessage successfully disabled.**', ephemeral: true });
+		const embed = new EmbedBuilder()
+			.setDescription('**✓** permamessage successfully disabled.')
+			.setColor(Colors.Green);
+		interaction.reply({ embeds: [embed], ephemeral: true });
 	},
 };

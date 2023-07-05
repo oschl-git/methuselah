@@ -4,7 +4,7 @@ const path = require('node:path');
 const wisdoms = require(path.join(__dirname, '../../command_config/wisdoms.json'));
 
 module.exports = {
-	cooldown: 1,
+	cooldown: 2,
 	data: new SlashCommandBuilder()
 		.setName('wisdom')
 		.setDescription('Gives you lifechanging wisdoms.')

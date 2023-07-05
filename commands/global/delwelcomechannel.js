@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, Colors } = require('discord.js');
 const welcomeChannels = require('../../helper_scripts/welcomeChannels.js');
 
 module.exports = {
@@ -14,11 +14,10 @@ module.exports = {
 		let welcomeChannelArray = welcomeChannels.getWelcomeChannelsFromJson();
 
 		if (!welcomeChannelArray.includes(interaction.channelId)) {
-			await interaction.reply({
-				content:
-					'**✕ this channel is not a welcome channel.**'
-				, ephemeral: true
-			});
+			const embed = new EmbedBuilder()
+				.setDescription('**✕** this channel is not a welcome channel.')
+				.setColor(Colors.Red);
+			interaction.reply({ embeds: [embed], ephemeral: true });
 			return;
 		}
 
@@ -26,6 +25,9 @@ module.exports = {
 
 		welcomeChannels.saveWelcomeChannelsToJson(welcomeChannelArray);
 
-		interaction.reply({ content: '**✓ unset this channel as a welcome channel.**', ephemeral: true });
+		const embed = new EmbedBuilder()
+			.setDescription('**✓** unset this channel as a welcome channel.')
+			.setColor(Colors.Green);
+		interaction.reply({ embeds: [embed], ephemeral: true });
 	},
 };

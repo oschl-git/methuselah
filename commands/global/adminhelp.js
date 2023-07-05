@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, Colors } = require('discord.js');
 const fs = require('node:fs');
 
 module.exports = {
@@ -11,16 +11,18 @@ module.exports = {
 	async execute(interaction) {
 		console.log(`[LOG] @${interaction.user.username} used the /adminhelp command.`);
 
-		let text;
-
 		try {
-			text = fs.readFileSync('command_config/adminhelp.md').toString();
-			interaction.reply({ content: text, ephemeral: true });
+			let text = fs.readFileSync('command_config/adminhelp.md').toString();
+			let embed = new EmbedBuilder().setDescription(text);
+			interaction.reply({ embeds: [embed], ephemeral: true });
 		}
 		catch (e) {
-			interaction.reply({ content: 'Error displaying information.', ephemeral: true });
 			console.error('[CRITICAL] Couldn\'t access adminhelp txt file.');
 			console.error(e);
+			const embed = new EmbedBuilder()
+				.setDescription('**✕** error displaying information.')
+				.setColor(Colors.Red);
+			interaction.reply({ embeds: [embed], ephemeral: true });
 			throw e;
 		}
 	},

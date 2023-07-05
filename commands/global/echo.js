@@ -1,7 +1,6 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, Colors } = require('discord.js');
 
 module.exports = {
-	cooldown: 1,
 	data: new SlashCommandBuilder()
 		.setName('echo')
 		.setDescription('Repeats whatever you write.')
@@ -18,12 +17,19 @@ module.exports = {
 		const content = interaction.options.getString('content') ?? null;
 
 		if (content == null) {
-			await interaction.reply({ content: '**✕ no content provided.**', ephemeral: true });
+			const embed = new EmbedBuilder()
+				.setDescription('**✕** no content provided.')
+				.setColor(Colors.Red);
+			interaction.reply({ embeds: [embed], ephemeral: true });
 			return;
 		}
 
 		const channel = interaction.guild.channels.cache.get(interaction.channelId);
 		channel.send(content);
-		await interaction.reply({ content: '**✓ done!**', ephemeral: true });
+
+		const embed = new EmbedBuilder()
+			.setDescription('**✓** done!')
+			.setColor(Colors.Green);
+		interaction.reply({ embeds: [embed], ephemeral: true });
 	},
 };
