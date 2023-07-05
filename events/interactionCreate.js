@@ -41,10 +41,10 @@ module.exports = {
 			await command.execute(interaction);
 		} catch (error) {
 			console.error(error);
-			await interaction.reply({
-				content: `[ERROR] Failed to execute command ${interaction.commandName}.`,
-				ephemeral: true
-			});
+			const embed = new EmbedBuilder()
+				.setDescription(`**✕** failed to execute command \`${interaction.commandName}\`.`)
+				.setColor(Colors.Red);
+			interaction.reply({ embeds: [embed], ephemeral: true });
 		}
 	},
 };

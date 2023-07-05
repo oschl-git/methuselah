@@ -27,7 +27,7 @@ module.exports = {
 			return;
 		}
 
-		if (number > rules.length || number < 1) {
+		if (!Number.isInteger(number) || number > rules.length || number < 1) {
 			const embed = new EmbedBuilder()
 				.setDescription('**✕** no such rule.')
 				.setColor(Colors.Red);
