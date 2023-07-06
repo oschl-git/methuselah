@@ -24,9 +24,11 @@ module.exports = {
 			return;
 		}
 
+		// Echo:
 		const channel = interaction.guild.channels.cache.get(interaction.channelId);
 		channel.send(content);
 
+		// Confirmation reply:
 		const embed = new EmbedBuilder()
 			.setDescription('**✓** done!')
 			.setColor(Colors.Green);

@@ -3,11 +3,11 @@ const { clientId } = require('../config.json');
 const permamessages = require('../helper_scripts/permamessages.js');
 const { cooldown } = require('../commands/global/setpermamessage');
 
+const permamessageDelay = 3000;
+
 module.exports = {
 	name: Events.MessageCreate,
 	async execute(message) {
-		const permamessageDelay = 3000;
-
 		let permamessageMap = permamessages.getPermamessageMapFromJson();
 
 		if (!permamessageMap.has(message.channelId)) return;
@@ -16,8 +16,7 @@ module.exports = {
 		console.log(`[LOG] @${message.author.username} triggered permamessage.`);
 
 		let lastMessageId = permamessageMap.get(message.channelId).sentMessageId;
-		let lastMessage;
-		lastMessage = await message.channel.messages.fetch(lastMessageId).catch(e => {
+		let lastMessage = await message.channel.messages.fetch(lastMessageId).catch(e => {
 			console.error('[ERROR] Couldn\'t fetch last permamessage.');
 			console.error(e);
 		});
@@ -26,8 +25,15 @@ module.exports = {
 
 		// Clear planned timeout if it exists
 		if (sentPermamessages.has(message.channelId)) {
-			clearTimeout(sentPermamessages.get(message.channelId));
-			sentPermamessages.delete(message.channelId);
+			try {
+				const timeoutId = sentPermamessages.get(message.channelId);
+				sentPermamessages.delete(message.channelId);
+				clearTimeout(timeoutId);
+			}
+			catch (e) {
+				console.error('[WARNING] Error stopping permamessage timeout.');
+				console.error(e);
+			}
 		}
 
 		if (typeof lastMessage != 'undefined' && lastMessageId != null && lastMessage.author.id == clientId) {

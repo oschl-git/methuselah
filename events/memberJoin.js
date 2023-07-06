@@ -8,7 +8,7 @@ module.exports = {
 		console.log(`[LOG] @${member.user.username} joined a server, triggered memberJoin.`);
 
 		const message = (
-			`${getEmoji('methuselah', member)} *${getRandomQuote()}${'*\n'}` +
+			`${getEmoji('methuselah', member)} *${getRandomQuote()}*\n` +
 			`**${member} just joined the server.**`
 		);
 
@@ -20,18 +20,18 @@ module.exports = {
 			}
 		}
 		catch {
-			console.error('[CRITICAL] Failed iterating through welcomeChannels JSON. Exiting...');
+			console.error('[CRITICAL] Failed iterating through welcomeChannels JSON.');
 			console.error(error);
 			throw error;
 		}
 	},
 };
 
-const getRandomQuote = () => {
+function getRandomQuote() {
 	return quotes[Math.floor(Math.random() * quotes.length)];
-};
+}
 
-const getEmoji = (name, client) => {
+function getEmoji(name, client) {
 	try {
 		const id = client.guild.emojis.cache.find(emoji => emoji.name === name).id;
 		return `<:${name}:${id}>`;
@@ -39,4 +39,4 @@ const getEmoji = (name, client) => {
 	catch {
 		return '';
 	}
-};
+}

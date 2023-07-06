@@ -3,7 +3,6 @@ const path = require('node:path');
 const { version } = require(path.join(__dirname, '../../package.json'));
 
 module.exports = {
-	cooldown: 1,
 	data: new SlashCommandBuilder()
 		.setName('ping')
 		.setDescription('A simple testing command.')

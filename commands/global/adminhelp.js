@@ -2,7 +2,6 @@ const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, Colors } = requi
 const fs = require('node:fs');
 
 module.exports = {
-	cooldown: 1,
 	data: new SlashCommandBuilder()
 		.setName('adminhelp')
 		.setDescription('Displays information about features for administrators.')
@@ -17,12 +16,13 @@ module.exports = {
 			interaction.reply({ embeds: [embed], ephemeral: true });
 		}
 		catch (e) {
-			console.error('[CRITICAL] Couldn\'t access adminhelp txt file.');
-			console.error(e);
 			const embed = new EmbedBuilder()
 				.setDescription('**✕** error displaying information.')
 				.setColor(Colors.Red);
 			interaction.reply({ embeds: [embed], ephemeral: true });
+
+			console.error('[CRITICAL] Couldn\'t access adminhelp txt file.');
+			console.error(e);
 			throw e;
 		}
 	},

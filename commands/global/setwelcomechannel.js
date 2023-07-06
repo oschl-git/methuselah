@@ -5,7 +5,7 @@ module.exports = {
 	cooldown: 10,
 	data: new SlashCommandBuilder()
 		.setName('setwelcomechannel')
-		.setDescription('Set this channel as a welcome channel. Methuselah will welcome people who join here.')
+		.setDescription('Sets this channel as a welcome channel. Methuselah will welcome people who join here.')
 		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.setDMPermission(false),
 	async execute(interaction) {
@@ -22,7 +22,6 @@ module.exports = {
 		}
 
 		welcomeChannelArray.push(interaction.channelId);
-
 		welcomeChannels.saveWelcomeChannelsToJson(welcomeChannelArray);
 
 		const embed = new EmbedBuilder()

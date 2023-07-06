@@ -5,7 +5,7 @@ module.exports = {
 	cooldown: 10,
 	data: new SlashCommandBuilder()
 		.setName('delpermamessage')
-		.setDescription('Delete this channel\'s permamessage.')
+		.setDescription('Deletes this channel\'s permamessage.')
 		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.setDMPermission(false),
 	async execute(interaction) {

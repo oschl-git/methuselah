@@ -5,7 +5,7 @@ module.exports = {
 	cooldown: 10,
 	data: new SlashCommandBuilder()
 		.setName('delwelcomechannel')
-		.setDescription('Unset this channel as a welcome channel.')
+		.setDescription('Unsets this channel as a welcome channel.')
 		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.setDMPermission(false),
 	async execute(interaction) {

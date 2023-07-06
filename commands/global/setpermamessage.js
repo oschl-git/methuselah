@@ -47,7 +47,6 @@ module.exports = {
 
 		permamessages.savePermamessageMapToJson(permamessageMap);
 
-
 		const embed = new EmbedBuilder()
 			.setDescription('**✓** permamessage set!')
 			.setColor(Colors.Green);

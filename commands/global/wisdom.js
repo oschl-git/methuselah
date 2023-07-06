@@ -15,16 +15,15 @@ module.exports = {
 		const message = (
 			`${getEmoji('methuselah', interaction)} *${getRandomWisdom()}*`
 		);
-
 		interaction.reply(message);
 	},
 };
 
-const getRandomWisdom = () => {
+function getRandomWisdom() {
 	return wisdoms[Math.floor(Math.random() * wisdoms.length)];
-};
+}
 
-const getEmoji = (name, client) => {
+function getEmoji(name, client) {
 	try {
 		const id = client.guild.emojis.cache.find(emoji => emoji.name === name).id;
 		return `<:${name}:${id}>`;
@@ -32,4 +31,4 @@ const getEmoji = (name, client) => {
 	catch {
 		return '';
 	}
-};
+}

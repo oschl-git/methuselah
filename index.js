@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
+const { version } = require('./package.json');
 
 const client = new Client({
 	intents: [
@@ -14,9 +15,12 @@ const client = new Client({
 	]
 });
 
+// Collections:
 client.cooldowns = new Collection();
 client.sentPermamessages = new Collection();
 
+
+console.log(`Starting Methuselah ${version}...`);
 createMissingFiles();
 setupCommands();
 setupEvents();
