@@ -1,6 +1,6 @@
 {
   "name": "methuselah",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "a custom bot for the The Long Dark Discord server.",
   "main": "index.js",
   "scripts": {
