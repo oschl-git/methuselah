@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, Colors } = require('discord.js');
-const permamessages = require('../../helper_scripts/permamessages.js');
+const permamessageRepository = require('../../data/permamessageRepository');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -26,9 +26,7 @@ module.exports = {
 			return;
 		}
 
-		let permamessageMap = permamessages.getPermamessageMapFromJson();
-
-		if (permamessageMap.has(interaction.channelId)) {
+		if (await permamessageRepository.doesChannelHavePermamessage(interaction.channelId)) {
 			const embed = new EmbedBuilder()
 				.setDescription(
 					'**✕** this channel already has a permamessage. Use /delpermamessage first to replace it.')
@@ -40,12 +38,11 @@ module.exports = {
 		const channel = interaction.guild.channels.cache.get(interaction.channelId);
 		let sentMessage = await channel.send(content);
 
-		permamessageMap.set(interaction.channelId, {
-			content: content,
-			sentMessageId: sentMessage.id,
-		});
-
-		permamessages.savePermamessageMapToJson(permamessageMap);
+		await permamessageRepository.savePermamessage(
+			interaction.channelId,
+			sentMessage.id,
+			content
+		);
 
 		const embed = new EmbedBuilder()
 			.setDescription('**✓** permamessage set!')

@@ -1,6 +1,7 @@
 const { Events, Collection } = require('discord.js');
 const { clientId } = require('../config.json');
 const permamessages = require('../helper_scripts/permamessages.js');
+const permamessageRepository = require('../data/permamessageRepository');
 const { cooldown } = require('../commands/global/setpermamessage');
 
 const permamessageDelay = 3000;
@@ -8,15 +9,14 @@ const permamessageDelay = 3000;
 module.exports = {
 	name: Events.MessageCreate,
 	async execute(message) {
-		let permamessageMap = permamessages.getPermamessageMapFromJson();
-
-		if (!permamessageMap.has(message.channelId)) return;
+		if (! await permamessageRepository.doesChannelHavePermamessage(message.channelId)) return;
 		if (message.author.id == clientId) return;
 
 		console.log(`[LOG] @${message.author.username} triggered permamessage.`);
 
-		let lastMessageId = permamessageMap.get(message.channelId).sentMessageId;
-		let lastMessage = await message.channel.messages.fetch(lastMessageId).catch(e => {
+		const storedPermamessage = await permamessageRepository.getPermamessageByChannelId(message.channelId);
+
+		let lastMessage = await message.channel.messages.fetch(storedPermamessage.sent_message_id).catch(e => {
 			console.error('[ERROR] Couldn\'t fetch last permamessage.');
 			console.error(e);
 		});
@@ -36,7 +36,7 @@ module.exports = {
 			}
 		}
 
-		if (typeof lastMessage != 'undefined' && lastMessageId != null && lastMessage.author.id == clientId) {
+		if (typeof lastMessage != 'undefined' && storedPermamessage.sent_message_id != null && lastMessage.author.id == clientId) {
 			sentPermamessages.set(message.channelId, setTimeout(async () => {
 				sentPermamessages.delete(message.channelId);
 				lastMessage.delete().catch(e => {
@@ -44,10 +44,12 @@ module.exports = {
 					console.error(e);
 					return;
 				});
-
-				let sentMessage = await message.channel.send(permamessageMap.get(message.channelId).content);
-				permamessageMap.get(message.channelId).sentMessageId = sentMessage.id;
-				permamessages.savePermamessageMapToJson(permamessageMap);
+				let sentMessage = await message.channel.send(storedPermamessage.content);
+				permamessageRepository.savePermamessage(
+					message.channelId,
+					sentMessage.id,
+					storedPermamessage.content
+				);
 			}, permamessageDelay));
 		}
 	}

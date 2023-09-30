@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, Colors } = require('discord.js');
-const permamessages = require('../../helper_scripts/permamessages.js');
+const permamessageRepository = require('../../data/permamessageRepository');
 
 module.exports = {
 	cooldown: 10,
@@ -11,9 +11,7 @@ module.exports = {
 	async execute(interaction) {
 		console.log(`[LOG] @${interaction.user.username} used the /delpermamessage command.`);
 
-		let permamessageMap = permamessages.getPermamessageMapFromJson();
-
-		if (!permamessageMap.has(interaction.channelId)) {
+		if (! await permamessageRepository.doesChannelHavePermamessage(interaction.channelId)) {
 			const embed = new EmbedBuilder()
 				.setDescription('**✕** this channel doesn\'t have a permamessage.')
 				.setColor(Colors.Red);
@@ -21,8 +19,7 @@ module.exports = {
 			return;
 		}
 
-		permamessageMap.delete(interaction.channelId);
-		permamessages.savePermamessageMapToJson(permamessageMap);
+		permamessageRepository.deletePermamessageByChannelId(interaction.channelId);
 
 		const embed = new EmbedBuilder()
 			.setDescription('**✓** permamessage successfully disabled.')
