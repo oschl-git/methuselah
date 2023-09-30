@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
-const fs = require('node:fs');
 const path = require('node:path');
+const { getEmojiByName } = require('../../helpers/emojiManager');
 const wisdoms = require(path.join(__dirname, '../../command-data/wisdoms.json'));
 
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
 		console.log(`[LOG] @${interaction.user.username} used the /wisdom command.`);
 
 		const message = (
-			`${getEmoji('methuselah', interaction)} *${getRandomWisdom()}*`
+			`${getEmojiByName('methuselah', interaction)} *${getRandomWisdom()}*`
 		);
 		interaction.reply(message);
 	},
@@ -21,14 +21,4 @@ module.exports = {
 
 function getRandomWisdom() {
 	return wisdoms[Math.floor(Math.random() * wisdoms.length)];
-}
-
-function getEmoji(name, client) {
-	try {
-		const id = client.guild.emojis.cache.find(emoji => emoji.name === name).id;
-		return `<:${name}:${id}>`;
-	}
-	catch {
-		return '';
-	}
 }

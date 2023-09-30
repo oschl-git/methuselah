@@ -1,8 +1,6 @@
-const { Events, Collection } = require('discord.js');
+const { Events } = require('discord.js');
 const { clientId } = require('../config.json');
-const permamessages = require('../helper_scripts/permamessages.js');
 const permamessageRepository = require('../data/permamessageRepository');
-const { cooldown } = require('../commands/global/setpermamessage');
 
 const permamessageDelay = 3000;
 

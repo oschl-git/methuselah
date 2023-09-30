@@ -1,4 +1,4 @@
-// Run this sciprt with node to reload guild commands. Pass in the "global" argument at the end to reload global commands.
+// Run this sciprt with Node to reload guild commands. Pass in the "global" argument at the end to reload global commands.
 
 const { REST, Routes } = require('discord.js');
 const { clientId, guildId, token } = require('./config.json');
@@ -34,7 +34,6 @@ for (const isGlobal of [true, false]) {
 			console.log(`[OK] Started refreshing ${commands.length} application (/) ${isGlobal ? 'global' : 'guild'} commands.`);
 
 			let data;
-			// The put method is used to fully refresh all commands in the guild with the current set
 			if (!isGlobal) {
 				data = await rest.put(
 					Routes.applicationGuildCommands(clientId, guildId),

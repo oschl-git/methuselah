@@ -1,5 +1,6 @@
 const { Events } = require('discord.js');
 const quotes = require('./../command-data/welcome-quotes.json');
+const { getEmojiByName } = require('../helpers/emojiManager');
 const welcomeChannelRepository = require('../data/welcomeChannelRepository');
 
 module.exports = {
@@ -8,7 +9,7 @@ module.exports = {
 		console.log(`[LOG] @${member.user.username} joined a server, triggered memberJoin.`);
 
 		const message = (
-			`${getEmoji('methuselah', member)} *${getRandomQuote()}*\n` +
+			`${getEmojiByName('methuselah', member)} *${getRandomQuote()}*\n` +
 			`**${member} just joined the server.**`
 		);
 
@@ -30,14 +31,4 @@ module.exports = {
 
 function getRandomQuote() {
 	return quotes[Math.floor(Math.random() * quotes.length)];
-}
-
-function getEmoji(name, client) {
-	try {
-		const id = client.guild.emojis.cache.find(emoji => emoji.name === name).id;
-		return `<:${name}:${id}>`;
-	}
-	catch {
-		return '';
-	}
 }

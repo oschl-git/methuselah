@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, Colors } = require('discord.js');
-const fs = require('node:fs');
 const path = require('node:path');
+const { getEmojiByName } = require('../../helpers/emojiManager');
 const rules = require(path.join(__dirname, '../../command-data/rules.json'));
 
 module.exports = {
@@ -37,20 +37,10 @@ module.exports = {
 
 		const rule = rules[number - 1];
 
-		const message = (`${getEmoji('methuselah', interaction)} *Remember rule ${number}:*\n`);
+		const message = (`${getEmojiByName('methuselah', interaction)} *Remember rule ${number}:*\n`);
 
 		const embed = new EmbedBuilder().setDescription(rule);
 
 		interaction.reply({ content: message, embeds: [embed] });
 	},
 };
-
-function getEmoji(name, client) {
-	try {
-		const id = client.guild.emojis.cache.find(emoji => emoji.name === name).id;
-		return `<:${name}:${id}>`;
-	}
-	catch {
-		return '';
-	}
-}
