@@ -1,6 +1,6 @@
 const { Events } = require('discord.js');
-const welcomeChannels = require('./../data/welcomeChannels.json');
 const quotes = require('./../command_config/welcomeQuotes.json');
+const welcomeChannelRepository = require('../data/welcomeChannelRepository');
 
 module.exports = {
 	name: Events.GuildMemberAdd,
@@ -12,6 +12,7 @@ module.exports = {
 			`**${member} just joined the server.**`
 		);
 
+		const welcomeChannels = await welcomeChannelRepository.getWelcomeChannelIds();
 		try {
 			for (const channelId of welcomeChannels) {
 				const channel = member.guild.channels.cache.get(channelId);

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, Colors } = require('discord.js');
-const welcomeChannels = require('../../helper_scripts/welcomeChannels.js');
+const welcomeChannelRepository = require('../../data/welcomeChannelRepository.js');
 
 module.exports = {
 	cooldown: 10,
@@ -11,9 +11,7 @@ module.exports = {
 	async execute(interaction) {
 		console.log(`[LOG] @${interaction.user.username} used the /delwelcomechannel command.`);
 
-		let welcomeChannelArray = welcomeChannels.getWelcomeChannelsFromJson();
-
-		if (!welcomeChannelArray.includes(interaction.channelId)) {
+		if (! await welcomeChannelRepository.isWelcomeChannel(interaction.channelId)) {
 			const embed = new EmbedBuilder()
 				.setDescription('**✕** this channel is not a welcome channel.')
 				.setColor(Colors.Red);
@@ -21,9 +19,7 @@ module.exports = {
 			return;
 		}
 
-		welcomeChannelArray.splice(welcomeChannelArray.indexOf(interaction.channelId), 1);
-
-		welcomeChannels.saveWelcomeChannelsToJson(welcomeChannelArray);
+		await welcomeChannelRepository.deleteWelcomeChannel(interaction.channelId);
 
 		const embed = new EmbedBuilder()
 			.setDescription('**✓** unset this channel as a welcome channel.')

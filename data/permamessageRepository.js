@@ -3,11 +3,10 @@ const { sql } = require('./db.js');
 
 async function doesChannelHavePermamessage(channelId) {
 	let result = await sql`
-	  select id
-	  from permamessages
-	  where channel_id = ${channelId}
+		select id
+		from permamessages
+		where channel_id = ${channelId}
 	`;
-
 	return result.length > 0;
 }
 
@@ -40,7 +39,7 @@ async function deletePermamessageByChannelId(channelId) {
 }
 
 async function getPermamessageByChannelId(channelId) {
-	let query = await sql`
+	const query = await sql`
 		select *
 		from permamessages
 		where channel_id = ${channelId};
@@ -53,5 +52,5 @@ module.exports = {
 	doesChannelHavePermamessage,
 	savePermamessage,
 	deletePermamessageByChannelId,
-	getPermamessageByChannelId
+	getPermamessageByChannelId,
 };

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, Colors } = require('discord.js');
-const welcomeChannels = require('../../helper_scripts/welcomeChannels.js');
+const welcomeChannelRepository = require('../../data/welcomeChannelRepository.js');
 
 module.exports = {
 	cooldown: 10,
@@ -11,9 +11,7 @@ module.exports = {
 	async execute(interaction) {
 		console.log(`[LOG] @${interaction.user.username} used the /setwelcomechannel command.`);
 
-		let welcomeChannelArray = welcomeChannels.getWelcomeChannelsFromJson();
-
-		if (welcomeChannelArray.includes(interaction.channelId)) {
+		if (await welcomeChannelRepository.isWelcomeChannel(interaction.channelId)) {
 			const embed = new EmbedBuilder()
 				.setDescription('**✕** this channel is already a welcome channel.')
 				.setColor(Colors.Red);
@@ -21,8 +19,7 @@ module.exports = {
 			return;
 		}
 
-		welcomeChannelArray.push(interaction.channelId);
-		welcomeChannels.saveWelcomeChannelsToJson(welcomeChannelArray);
+		await welcomeChannelRepository.saveWelcomeChannel(interaction.channelId);
 
 		const embed = new EmbedBuilder()
 			.setDescription('**✓** welcome channel set!')
