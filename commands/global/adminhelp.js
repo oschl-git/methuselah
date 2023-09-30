@@ -11,7 +11,7 @@ module.exports = {
 		console.log(`[LOG] @${interaction.user.username} used the /adminhelp command.`);
 
 		try {
-			let text = fs.readFileSync('command_data/adminhelp.md').toString();
+			let text = fs.readFileSync('command-data/adminhelp.md').toString();
 			let embed = new EmbedBuilder().setDescription(text);
 			interaction.reply({ embeds: [embed], ephemeral: true });
 		}

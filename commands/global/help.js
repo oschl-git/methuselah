@@ -10,7 +10,7 @@ module.exports = {
 		console.log(`[LOG] @${interaction.user.username} used the /help command.`);
 
 		try {
-			const text = fs.readFileSync('command_data/help.md').toString();
+			const text = fs.readFileSync('command-data/help.md').toString();
 			const embed = new EmbedBuilder().setDescription(text);
 			interaction.reply({ embeds: [embed], ephemeral: true });
 		}

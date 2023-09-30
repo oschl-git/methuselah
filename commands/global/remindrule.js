@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder, Colors } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-const rules = require(path.join(__dirname, '../../command_data/rules.json'));
+const rules = require(path.join(__dirname, '../../command-data/rules.json'));
 
 module.exports = {
 	cooldown: 1,
