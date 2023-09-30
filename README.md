@@ -5,7 +5,7 @@
 Methuselah is a custom bot for the The Long Dark Discord server.
 
 ## Important notes
-- The bot needs a PostgreSQL database to store non static data. The schema for this database can be found in the `postgresql-schema.sql` file.
+- The bot needs a PostgreSQL database to store non static data. The schema for this database can be found in the [postgresql-schema.sql](postgresql-schema.sql) file.
 - To work correctly, the bot needs to have a `config.json` file in the project folder. It needs to be of the following format:
 ```
 {
