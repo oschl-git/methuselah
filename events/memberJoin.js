@@ -1,5 +1,5 @@
 const { Events } = require('discord.js');
-const quotes = require('./../command-data/welcome-quotes.json');
+const quotes = require('./../static-data/welcome-quotes.json');
 const { getEmojiByName } = require('../helpers/emojiManager');
 const welcomeChannelRepository = require('../data/welcomeChannelRepository');
 

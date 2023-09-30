@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const path = require('node:path');
 const { getEmojiByName } = require('../../helpers/emojiManager');
-const wisdoms = require(path.join(__dirname, '../../command-data/wisdoms.json'));
+const wisdoms = require(path.join(__dirname, '../../static-data/wisdoms.json'));
 
 module.exports = {
 	cooldown: 2,
