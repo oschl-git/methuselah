@@ -11,6 +11,13 @@ Methuselah is a custom bot for the The Long Dark Discord server.
 	"token": "<token>",
 	"clientId": "<application ID>",
 	"guildId": "<server ID>"
+	"db": {
+		"host": "<PostgreSQL server (e. g. "localhost")>",
+		"port": <PostgreSQL port (integer) (e. g. 5432)>,
+		"database": "<database name (e. g. "methuselah")>",
+		"username": "<PostgreSQL username>",
+		"password": "<PostgreSQL password>"
+	}
 }
 ```
 Make sure to never share this file with anyone and put it in your `.gitignore`.
