@@ -22,33 +22,10 @@ client.sentPermamessages = new Collection();
 
 
 console.log(`Starting Methuselah ${version}...`);
-createMissingFiles();
 setupCommands();
 setupEvents();
 client.login(token);
 
-
-function createMissingFiles() {
-	const filePaths = [
-		{ path: 'data/permamessages.json', iterable: false },
-		{ path: 'data/welcomeChannels.json', iterable: true },
-	];
-
-	for (const filePath of filePaths) {
-		if (!fs.existsSync(filePath.path)) {
-			fs.mkdirSync(path.dirname(filePath.path), { recursive: true });
-
-			try {
-				fs.writeFileSync(filePath.path, filePath.iterable ? '[]' : '{}');
-			}
-			catch (error) {
-				console.error('[CRITICAL] Failed creating required files.');
-				console.error(error);
-				throw error;
-			}
-		}
-	}
-}
 
 function setupCommands() {
 	client.commands = new Collection();

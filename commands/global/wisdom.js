@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-const wisdoms = require(path.join(__dirname, '../../command_config/wisdoms.json'));
+const wisdoms = require(path.join(__dirname, '../../command_data/wisdoms.json'));
 
 module.exports = {
 	cooldown: 2,
