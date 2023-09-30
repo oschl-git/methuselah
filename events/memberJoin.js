@@ -1,5 +1,5 @@
 const { Events } = require('discord.js');
-const quotes = require('./../command-data/welcomeQuotes.json');
+const quotes = require('./../command-data/welcome-quotes.json');
 const welcomeChannelRepository = require('../data/welcomeChannelRepository');
 
 module.exports = {
