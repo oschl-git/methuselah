@@ -5,6 +5,7 @@ const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 const { version } = require('./package.json');
+const { doesChannelHavePermamessage, savePermamessage } = require('./data/permamessageRepository.js');
 
 const client = new Client({
 	intents: [
@@ -14,6 +15,7 @@ const client = new Client({
 		GatewayIntentBits.MessageContent
 	]
 });
+
 
 // Collections:
 client.cooldowns = new Collection();
