@@ -56,26 +56,23 @@ module.exports = {
 			const embed = new EmbedBuilder()
 				.setDescription('**✕** error reading layout file.')
 				.setColor(Colors.Red);
-			interaction.reply({ ephemeral: true });
+			interaction.reply({ embeds: [embed], ephemeral: true });
 			return;
 		}
 
 		const channel = interaction.guild.channels.cache.get(interaction.channelId);
 
-		const embed1 = new EmbedBuilder()
-			.setDescription('sending...')
-			.setColor(Colors.Green);
-		interaction.deferReply({ embeds: [embed1], ephemeral: true });
+		interaction.deferReply({ ephemeral: true });
 
 		for (const message of layoutArray) {
 			sendParsedMessage(channel, message, directoryPath);
 			await new Promise(r => setTimeout(r, MESSAGE_INTERVAL));
 		}
 
-		const embed2 = new EmbedBuilder()
+		const embed = new EmbedBuilder()
 			.setDescription('**✓** done!')
 			.setColor(Colors.Green);
-		interaction.editReply({ embeds: [embed2] });
+		interaction.editReply({ embeds: [embed] });
 	},
 };
 

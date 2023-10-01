@@ -9,6 +9,19 @@ const sql = postgres({
 	password: db['password'],
 });
 
+async function testDatabaseConnection() {
+	try {
+		await sql`
+			select 1;
+		`;
+	} catch (e) {
+		console.error(e);
+		return false;
+	}
+	return true;
+}
+
 module.exports = {
 	sql,
+	testDatabaseConnection,
 };

@@ -5,6 +5,7 @@ const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 const { version } = require('./package.json');
+const { testDatabaseConnection } = require('./data/db');
 
 const client = new Client({
 	intents: [
@@ -21,11 +22,30 @@ client.cooldowns = new Collection();
 client.sentPermamessages = new Collection();
 
 
-console.log(`Starting Methuselah ${version}...`);
+console.log(`[INFO] Starting Methuselah ${version}...`);
+runStartupChecks();
 setupCommands();
 setupEvents();
 client.login(token);
 
+
+async function runStartupChecks() {
+	console.log('[INFO] Running startup checks...');
+
+	if (!fs.existsSync('./config.json')) {
+		console.error(`[CRITICAL] Couldn't find config.json.`);
+		process.exit(1);
+	} else {
+		console.log('[OK] Located config.json.');
+	}
+
+	if (! await testDatabaseConnection()) {
+		console.error(`[CRITICAL] Contacting database wasn't successful.`);
+		process.exit(1);
+	} else {
+		console.log('[OK] Database connected.');
+	}
+}
 
 function setupCommands() {
 	client.commands = new Collection();
