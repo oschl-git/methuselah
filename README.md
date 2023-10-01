@@ -8,6 +8,18 @@ It uses the DiscordJS library to interact with the Discord API, and is written e
 
 Given the nature of the bot, it isn't particularly useful for any other Discord server, but many of its features and code can be easily adapted for your own needs.
 
+## Features
+
+- posting information channel threads, including images
+- welcoming people who join the server with a random quote from the game
+- *permamessages*, messages posted by the bot which always stay "pinned" at the bottom of a channel
+- reminding server rules
+- several smaller features:
+	- echoing what administrators type
+	- sending random wisdoms
+
+Plus a few other things. More features are planned in the future.
+
 ## Important notes
 - The bot needs a PostgreSQL database to store non-static data. The schema for this database can be found in the [postgresql-schema.sql](postgresql-schema.sql) file.
 - To work correctly, the bot needs to have a `config.json` file in the project folder. It needs to be of the following format:
