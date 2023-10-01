@@ -26,3 +26,6 @@ Given the nature of the bot, it isn't particularly useful for any other Discord 
 }
 ```
 **Make sure to never share this file with anyone and put it in your `.gitignore`.**
+
+## License
+The bot is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html).
