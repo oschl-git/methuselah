@@ -1,4 +1,4 @@
-// Run this sciprt with Node to reload guild commands. Pass in the "global" argument at the end to reload global commands.
+// Run this script with Node to reload Methuselah's commands.
 
 const { REST, Routes } = require('discord.js');
 const { clientId, guildId, token } = require('./config.json');
