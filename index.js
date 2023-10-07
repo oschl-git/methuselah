@@ -2,7 +2,7 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, GatewayIntentBits, Partials } = require('discord.js');
 const { token } = require('./config.json');
 const { version } = require('./package.json');
 const { testDatabaseConnection } = require('./data/db');
@@ -12,8 +12,14 @@ const client = new Client({
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildMembers,
 		GatewayIntentBits.GuildMessages,
-		GatewayIntentBits.MessageContent
-	]
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMessageReactions,
+	],
+	partials: [
+		Partials.Message,
+		Partials.Channel,
+		Partials.Reaction,
+	],
 });
 
 
