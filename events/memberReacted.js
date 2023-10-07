@@ -1,4 +1,5 @@
 const { Events } = require('discord.js');
+const reactionRoleMessagesRepository = require('../data/reactionRoleMessagesRepository');
 
 module.exports = {
 	name: Events.MessageReactionAdd,
