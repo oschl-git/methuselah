@@ -1,0 +1,5 @@
+# This is the default configuration file. Don't edit it directly, create a production.yaml or development.yaml file in
+# the same directory to override the default values.
+
+token: # Discord bot token - never share this with anyone!
+minLogLevel: 3 # Minimum log level for the bot to output logs (1: trace, 2: debug, 3: info, 4: warn, 5: error, 6: fatal)

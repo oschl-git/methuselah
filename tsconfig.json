@@ -3,9 +3,10 @@
   "include": ["src"],
   "exclude": ["node_modules", "dist"],
   "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "dist",
     "emitDecoratorMetadata": false,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "rootDir": "src"
   }
 }

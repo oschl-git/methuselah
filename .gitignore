@@ -87,3 +87,8 @@ web_modules/
 
 # Compiled output
 dist/
+
+# Configuration
+config/*
+!config/
+!config/default.yaml
