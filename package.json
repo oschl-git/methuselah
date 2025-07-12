@@ -1,15 +1,9 @@
 {
   "name": "methuselah",
-  "version": "1.0.0",
-  "description": "a custom bot for the The Long Dark Discord server.",
+  "version": "2.0.0",
+  "description": "a bot for the The Long Dark Discord server",
   "main": "index.js",
-  "scripts": {
-    "start": "node ."
-  },
-  "author": "Ondřej Schlaichert",
-  "license": "ISC",
-  "dependencies": {
-    "discord.js": "^14.11.0",
-    "postgres": "^3.3.5"
-  }
+  "repository": "git@github.com:oschl-git/methuselah.git",
+  "author": "Ondřej Schlaichert <schlaichert.o@gmail.com>",
+  "license": "GPL-3.0"
 }
