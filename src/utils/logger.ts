@@ -5,6 +5,6 @@ import config from "config";
 export default new Logger({
   name: manifest.name,
   type: "pretty",
-  minLevel: config.get<number>("minLogLevel") || 3,
+  minLevel: config.has("minLogLevel") ? config.get("minLogLevel") : 3,
   hideLogPositionForProduction: true,
 });
