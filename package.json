@@ -20,7 +20,7 @@
     "config": "^4.0.0",
     "discord.js": "^14.21.0",
     "tslog": "^4.9.3",
-    "yaml-parser": "^3.5.3"
+    "yaml": "^2.8.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.31.0",

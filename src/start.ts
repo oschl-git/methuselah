@@ -1,4 +1,5 @@
 import { Client, Events } from "discord.js";
+import * as commandProcessor from "./commands/commandProcessor.js";
 import config from "config";
 import logger from "./utils/logger.js";
 import manifest from "../package.json" with { type: "json" };
@@ -11,6 +12,8 @@ async function start(): Promise<void> {
   const client = new Client({
     intents: [],
   });
+
+  commandProcessor.loadCommands(client);
 
   client.on(Events.ClientReady, (readyClient) => {
     logger.info(`Logged in as ${readyClient.user.tag}!`);

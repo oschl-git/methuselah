@@ -1,3 +1,4 @@
+import CommandNotFoundError from "../errors/CommandNotFoundError.js";
 import {
   ChatInputCommandInteraction,
   Client,
@@ -6,9 +7,12 @@ import {
   Interaction,
   SlashCommandBuilder,
 } from "discord.js";
-import CommandNotFoundError from "../errors/CommandNotFoundError.js";
-import logger from "../utils/logger.js";
 import ErrorEmbed from "../responses/ErrorEmbed.js";
+import fs from "fs";
+import logger from "../utils/logger.js";
+import path from "path";
+import yaml from "yaml";
+import assert from "assert";
 
 interface Command {
   data: SlashCommandBuilder;
@@ -17,8 +21,19 @@ interface Command {
 
 const commands = new Collection<string, Command>();
 
-export function loadCommands(client: Client): void {
-  // @TODO add logic for loading commands from index
+export async function loadCommands(client: Client): Promise<void> {
+  for (const [name, path] of Object.entries(parseCommandIndex())) {
+    logger.debug(parseCommandIndex());
+
+    type CommandConstructor = new (...args: unknown[]) => Command;
+
+    const command = new ((await import(`../../${path}`))
+      .default as CommandConstructor)();
+
+    command.data.setName(name);
+
+    commands.set(name, command);
+  }
 
   client.on(Events.InteractionCreate, processCommand);
 }
@@ -45,4 +60,20 @@ async function processCommand(interaction: Interaction) {
 
     logger.error(`Failed executing command ${interaction.commandName}`, error);
   }
+}
+
+function parseCommandIndex(): Record<string, string> {
+  const commandIndexPath = path.join(
+    process.cwd(),
+    "src",
+    "commands",
+    "index.yaml",
+  );
+
+  assert(fs.existsSync(commandIndexPath), "Command index file does not exist");
+
+  return yaml.parse(fs.readFileSync(commandIndexPath, "utf8")) as Record<
+    string,
+    string
+  >;
 }

@@ -1,8 +1,10 @@
-import { ChatInputCommandInteraction } from 'discord.js';
-import CommandHandler from './CommandHandler.js';
+import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
+import Command from './Command.js';
 
-export default class Ping implements CommandHandler {
-	async invoke(interaction: ChatInputCommandInteraction): Promise<void> {
+export default class Ping implements Command {
+	data = new SlashCommandBuilder()
+		.setDescription('Replies with Pong!');
+	async execute(interaction: ChatInputCommandInteraction): Promise<void> {
 		await interaction.reply('Pong!');
 	}
 }
