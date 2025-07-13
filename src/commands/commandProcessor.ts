@@ -1,40 +1,17 @@
 import CommandNotFoundError from "../errors/CommandNotFoundError.js";
-import {
-  ChatInputCommandInteraction,
-  Client,
-  Collection,
-  Events,
-  Interaction,
-  SlashCommandBuilder,
-} from "discord.js";
+import { Client, Collection, Events, Interaction } from "discord.js";
 import ErrorEmbed from "../responses/ErrorEmbed.js";
 import fs from "fs";
 import logger from "../utils/logger.js";
 import path from "path";
 import yaml from "yaml";
 import assert from "assert";
+import Command from "./handlers/Command.js";
 
-interface Command {
-  data: SlashCommandBuilder;
-  execute(interaction: ChatInputCommandInteraction): Promise<void>;
-}
-
-const commands = new Collection<string, Command>();
+let commands = new Collection<string, Command>();
 
 export async function loadCommands(client: Client): Promise<void> {
-  for (const [name, path] of Object.entries(parseCommandIndex())) {
-    logger.debug(parseCommandIndex());
-
-    type CommandConstructor = new (...args: unknown[]) => Command;
-
-    const command = new ((await import(`../../${path}`))
-      .default as CommandConstructor)();
-
-    command.data.setName(name);
-
-    commands.set(name, command);
-  }
-
+  commands = await parseCommandIndex();
   client.on(Events.InteractionCreate, processCommand);
 }
 
@@ -62,7 +39,7 @@ async function processCommand(interaction: Interaction) {
   }
 }
 
-function parseCommandIndex(): Record<string, string> {
+async function parseCommandIndex(): Promise<Collection<string, Command>> {
   const commandIndexPath = path.join(
     process.cwd(),
     "src",
@@ -72,8 +49,19 @@ function parseCommandIndex(): Record<string, string> {
 
   assert(fs.existsSync(commandIndexPath), "Command index file does not exist");
 
-  return yaml.parse(fs.readFileSync(commandIndexPath, "utf8")) as Record<
-    string,
-    string
-  >;
+  const commandIndex = yaml.parse(fs.readFileSync(commandIndexPath, "utf8"));
+
+  const commands = new Collection<string, Command>();
+  for (const [name, path] of Object.entries(commandIndex)) {
+    type CommandConstructor = new (...args: unknown[]) => Command;
+
+    const command = new ((await import(`../../${path}`))
+      .default as CommandConstructor)();
+
+    command.data.setName(name);
+
+    commands.set(name, command);
+  }
+
+  return commands;
 }
