@@ -1,13 +1,9 @@
-import { Client } from "discord.js";
+import { Client, Events } from "discord.js";
 import config from "config";
 import logger from "./utils/logger.js";
 import manifest from "../package.json" with { type: "json" };
 
-try {
-  await start();
-} catch (error) {
-  logger.error("An error occurred during startup:", error);
-}
+start();
 
 async function start(): Promise<void> {
   logger.info(`Starting version ${manifest.version}...`);
@@ -16,7 +12,9 @@ async function start(): Promise<void> {
     intents: [],
   });
 
+  client.on(Events.ClientReady, (readyClient) => {
+    logger.info(`Logged in as ${readyClient.user.tag}!`);
+  });
+  
   client.login(config.get<string>("token"));
-
-  logger.info("Successfully started!");
 }
