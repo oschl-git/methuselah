@@ -1,14 +1,19 @@
 import {
+  ChatInputCommandInteraction,
   Client,
   Collection,
   Events,
   Interaction,
-  EmbedBuilder,
-  Colors,
+  SlashCommandBuilder,
 } from "discord.js";
-import Command from "./handlers/Command.js";
 import CommandNotFoundError from "../errors/CommandNotFoundError.js";
-import logger from '../utils/logger.js';
+import logger from "../utils/logger.js";
+import ErrorEmbed from "../responses/ErrorEmbed.js";
+
+interface Command {
+  data: SlashCommandBuilder;
+  execute(interaction: ChatInputCommandInteraction): Promise<void>;
+}
 
 const commands = new Collection<string, Command>();
 
@@ -22,26 +27,22 @@ async function processCommand(interaction: Interaction) {
   if (!interaction.isChatInputCommand()) return;
 
   try {
-		const command = commands.get(interaction.commandName);
+    const command = commands.get(interaction.commandName);
 
     if (!command) {
       throw new CommandNotFoundError(
         "Attempted to execute a command that does not exist",
         interaction.commandName,
       );
-    }	
+    }
 
     await command.execute(interaction);
   } catch (error) {
-    const embed = new EmbedBuilder()
-      .setDescription("**✕** error executing command.")
-      .setColor(Colors.Red);
-
     interaction.reply({
-      embeds: [embed],
+      embeds: [new ErrorEmbed("an error occured while executing command.")],
       ephemeral: true,
     });
 
-		logger.error(`Failed executing command ${interaction.commandName}`, error);
+    logger.error(`Failed executing command ${interaction.commandName}`, error);
   }
 }
