@@ -1,1 +1,1 @@
-ping: src/commands/handlers/Ping.ts
+ping: Ping.ts

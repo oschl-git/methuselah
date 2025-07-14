@@ -29,13 +29,20 @@ async function processCommand(interaction: Interaction) {
     }
 
     await command.execute(interaction);
+
+    logger.info(
+      `@${interaction.user.username} executed /${interaction.commandName}`,
+    );
   } catch (error) {
     interaction.reply({
       embeds: [new ErrorEmbed("an error occured while executing command.")],
       ephemeral: true,
     });
 
-    logger.error(`Failed executing command ${interaction.commandName}`, error);
+    logger.error(
+      `Failed executing /${interaction.commandName} used by @${interaction.user.username}`,
+      error,
+    );
   }
 }
 
@@ -49,13 +56,23 @@ async function parseCommandIndex(): Promise<Collection<string, Command>> {
 
   assert(fs.existsSync(commandIndexPath), "Command index file does not exist");
 
-  const commandIndex = yaml.parse(fs.readFileSync(commandIndexPath, "utf8"));
+  const commandIndex = yaml.parse(
+    fs.readFileSync(commandIndexPath, "utf8"),
+  ) as Collection<string, string>;
 
   const commands = new Collection<string, Command>();
-  for (const [name, path] of Object.entries(commandIndex)) {
+  for (const [name, filename] of Object.entries(commandIndex)) {
+    const filePath = path.join(
+      process.cwd(),
+      "src",
+      "commands",
+      "handlers",
+      filename,
+    );
+
     type CommandConstructor = new (...args: unknown[]) => Command;
 
-    const command = new ((await import(`../../${path}`))
+    const command = new ((await import(filePath))
       .default as CommandConstructor)();
 
     command.data.setName(name);

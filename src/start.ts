@@ -13,10 +13,11 @@ async function start(): Promise<void> {
     intents: [],
   });
 
+  logger.info("Loading commands...");
   commandProcessor.loadCommands(client);
 
   client.on(Events.ClientReady, (readyClient) => {
-    logger.info(`Logged in as ${readyClient.user.tag}!`);
+    logger.info(`Logged in as [${readyClient.user.tag}]`);
   });
 
   client.login(config.get<string>("token"));

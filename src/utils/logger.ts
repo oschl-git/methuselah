@@ -13,6 +13,7 @@ const logger = new Logger({
   name: manifest.name,
   type: type as "json" | "pretty" | "hidden",
   minLevel: minLevel,
+  hideLogPositionForProduction: true,
 });
 
 process.on("uncaughtException", (error) => {
