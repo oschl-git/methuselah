@@ -13,11 +13,15 @@ const client = new Client({
 
 logger.info("Attempting to register commands with the Discord API...");
 
-try {
-  const result = await commandDeployer.registerCommands();
-  logger.info(`Successfully registered ${result.length} commands`);
-} catch (error) {
-  logger.error("Failed registering commands with the Discord API", error);
+if (config.get<boolean>("registerCommands")) {
+  try {
+    const result = await commandDeployer.registerCommands();
+    logger.info(`Successfully registered ${result.length} commands`);
+  } catch (error) {
+    logger.error("Failed registering commands with the Discord API", error);
+  }
+} else {
+  logger.warn("Command registration with the Discord API is disabled in the configuration");
 }
 
 logger.info("Loading commands...");
