@@ -1,17 +1,14 @@
-import CommandNotFoundError from "../errors/CommandNotFoundError.js";
 import { Client, Collection, Events, Interaction } from "discord.js";
-import ErrorEmbed from "../responses/ErrorEmbed.js";
-import fs from "fs";
-import logger from "../utils/logger.js";
-import path from "path";
-import yaml from "yaml";
-import assert from "assert";
 import Command from "./handlers/Command.js";
+import CommandNotFoundError from "../errors/CommandNotFoundError.js";
+import ErrorEmbed from "../responses/ErrorEmbed.js";
+import logger from "../utils/logger.js";
+import loadCommandIndex from "./commandLoader.js";
 
 let commands = new Collection<string, Command>();
 
 export async function loadCommands(client: Client): Promise<void> {
-  commands = await parseCommandIndex();
+  commands = await loadCommandIndex();
   client.on(Events.InteractionCreate, processCommand);
 }
 
@@ -44,41 +41,4 @@ async function processCommand(interaction: Interaction) {
       error,
     );
   }
-}
-
-async function parseCommandIndex(): Promise<Collection<string, Command>> {
-  const commandIndexPath = path.join(
-    process.cwd(),
-    "src",
-    "commands",
-    "index.yaml",
-  );
-
-  assert(fs.existsSync(commandIndexPath), "Command index file does not exist");
-
-  const commandIndex = yaml.parse(
-    fs.readFileSync(commandIndexPath, "utf8"),
-  ) as Collection<string, string>;
-
-  const commands = new Collection<string, Command>();
-  for (const [name, filename] of Object.entries(commandIndex)) {
-    const filePath = path.join(
-      process.cwd(),
-      "src",
-      "commands",
-      "handlers",
-      filename,
-    );
-
-    type CommandConstructor = new (...args: unknown[]) => Command;
-
-    const command = new ((await import(filePath))
-      .default as CommandConstructor)();
-
-    command.data.setName(name);
-
-    commands.set(name, command);
-  }
-
-  return commands;
 }
