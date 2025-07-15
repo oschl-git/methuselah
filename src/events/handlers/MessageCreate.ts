@@ -1,4 +1,4 @@
-import { Events, Message, TextChannel } from 'discord.js';
+import { Events, Message, TextChannel } from "discord.js";
 import Event from "./Event.js";
 
 export default class MessageCreate implements Event<Events.MessageCreate> {
@@ -12,9 +12,9 @@ export default class MessageCreate implements Event<Events.MessageCreate> {
       return;
     }
 
-		if (message.author.bot) {
-			return;
-		}
+    if (message.author.bot) {
+      return;
+    }
 
     await (channel as TextChannel).send(message.content);
   }

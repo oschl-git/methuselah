@@ -1,9 +1,9 @@
 import { APIApplicationCommand, REST, Routes } from "discord.js";
 import config from "config";
-import loadCommandIndex from "./commandLoader.js";
+import getCommandIndex from "./commandLoader.js";
 
 export async function registerCommands(): Promise<APIApplicationCommand[]> {
-  const commandIndex = await loadCommandIndex();
+  const commandIndex = await getCommandIndex();
 
   const commands = [];
   for (const command of commandIndex.values()) {

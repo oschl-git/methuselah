@@ -3,7 +3,7 @@ import * as commandDeployer from "./commands/commandDeployer.js";
 import * as commandProcessor from "./commands/commandProcessor.js";
 import * as eventProcessor from "./events/eventProcessor.js";
 import config from "config";
-import logger from "./utils/logger.js";
+import logger from "./services/logger.js";
 import manifest from "../package.json" with { type: "json" };
 
 logger.info(`Starting ${manifest.name} ${manifest.version}...`);
@@ -17,6 +17,12 @@ const client = new Client({
     GatewayIntentBits.GuildMessageReactions,
   ],
 });
+
+logger.info("Loading commands...");
+await commandProcessor.loadCommands(client);
+
+logger.info("Loading events...");
+await eventProcessor.loadEvents(client);
 
 if (config.get<boolean>("registerCommands")) {
   logger.info("Attempting to register commands with the Discord API...");
@@ -32,12 +38,6 @@ if (config.get<boolean>("registerCommands")) {
     "Command registration with the Discord API is disabled in the configuration",
   );
 }
-
-logger.info("Loading commands...");
-await commandProcessor.loadCommands(client);
-
-logger.info("Loading events...");
-await eventProcessor.loadEvents(client);
 
 await client.login(config.get<string>("token"));
 

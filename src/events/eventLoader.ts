@@ -4,7 +4,7 @@ import assert from "assert";
 import fs from "fs";
 import yaml from "yaml";
 
-export default async function loadCommandIndex(): Promise<Event[]> {
+export default async function getEventIndex(): Promise<Event[]> {
   const eventIndexPath = path.join(
     process.cwd(),
     "src",
