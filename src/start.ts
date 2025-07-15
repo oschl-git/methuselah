@@ -1,6 +1,7 @@
-import { Client } from "discord.js";
-import * as commandProcessor from "./commands/commandProcessor.js";
+import { Client, GatewayIntentBits } from "discord.js";
 import * as commandDeployer from "./commands/commandDeployer.js";
+import * as commandProcessor from "./commands/commandProcessor.js";
+import * as eventProcessor from "./events/eventProcessor.js";
 import config from "config";
 import logger from "./utils/logger.js";
 import manifest from "../package.json" with { type: "json" };
@@ -8,7 +9,13 @@ import manifest from "../package.json" with { type: "json" };
 logger.info(`Starting ${manifest.name} ${manifest.version}...`);
 
 const client = new Client({
-  intents: [],
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMessageReactions,
+  ],
 });
 
 if (config.get<boolean>("registerCommands")) {
@@ -28,6 +35,9 @@ if (config.get<boolean>("registerCommands")) {
 
 logger.info("Loading commands...");
 await commandProcessor.loadCommands(client);
+
+logger.info("Loading events...");
+await eventProcessor.loadEvents(client);
 
 await client.login(config.get<string>("token"));
 

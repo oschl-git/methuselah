@@ -1,17 +1,13 @@
-import { Collection } from 'discord.js';
-import Command from './handlers/Command.js';
-import path from 'path';
-import assert from 'assert';
-import fs from 'fs';
-import yaml from 'yaml';
+import { Collection } from "discord.js";
+import Command from "./handlers/Command.js";
+import path from "path";
+import assert from "assert";
+import fs from "fs";
+import yaml from "yaml";
 
-let commands: Collection<string, Command>|null = null;
-
-export default async function loadCommandIndex(): Promise<Collection<string, Command>> {
-  if (commands !== null) {
-    return commands;
-  }
-
+export default async function loadCommandIndex(): Promise<
+  Collection<string, Command>
+> {
   const commandIndexPath = path.join(
     process.cwd(),
     "src",
@@ -25,7 +21,7 @@ export default async function loadCommandIndex(): Promise<Collection<string, Com
     fs.readFileSync(commandIndexPath, "utf8"),
   ) as string[];
 
-  commands = new Collection<string, Command>();
+  const commands = new Collection<string, Command>();
   for (const filename of commandIndex) {
     const filePath = path.join(
       process.cwd(),
