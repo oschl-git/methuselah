@@ -1,4 +1,4 @@
-import { Events, ClientEvents } from "discord.js";
+import { ClientEvents } from "discord.js";
 
 export default interface Event<
   T extends keyof ClientEvents = keyof ClientEvents,
