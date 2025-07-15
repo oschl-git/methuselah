@@ -8,6 +8,7 @@ import manifest from "../../../package.json" with { type: "json" };
 
 export default class Ping implements Command {
   data = new SlashCommandBuilder()
+    .setName("ping")
     .setDescription("A simple testing command.")
 
   async execute(interaction: ChatInputCommandInteraction): Promise<void> {

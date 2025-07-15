@@ -11,7 +11,7 @@ export default async function loadCommandIndex(): Promise<Collection<string, Com
   if (commands !== null) {
     return commands;
   }
-  
+
   const commandIndexPath = path.join(
     process.cwd(),
     "src",
@@ -23,10 +23,10 @@ export default async function loadCommandIndex(): Promise<Collection<string, Com
 
   const commandIndex = yaml.parse(
     fs.readFileSync(commandIndexPath, "utf8"),
-  ) as Collection<string, string>;
+  ) as string[];
 
   commands = new Collection<string, Command>();
-  for (const [name, filename] of Object.entries(commandIndex)) {
+  for (const filename of commandIndex) {
     const filePath = path.join(
       process.cwd(),
       "src",
@@ -40,9 +40,7 @@ export default async function loadCommandIndex(): Promise<Collection<string, Com
     const command = new ((await import(filePath))
       .default as CommandConstructor)();
 
-    command.data.setName(name);
-
-    commands.set(name, command);
+    commands.set(command.data.name, command);
   }
 
   return commands;
