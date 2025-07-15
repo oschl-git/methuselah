@@ -1,4 +1,10 @@
-import { Client, Collection, Events, Interaction } from "discord.js";
+import {
+  Client,
+  Collection,
+  Events,
+  Interaction,
+  MessageFlags,
+} from "discord.js";
 import Command from "./handlers/Command.js";
 import CommandNotFoundError from "../errors/CommandNotFoundError.js";
 import ErrorEmbed from "../responses/ErrorEmbed.js";
@@ -33,7 +39,7 @@ async function processCommand(interaction: Interaction) {
   } catch (error) {
     interaction.reply({
       embeds: [new ErrorEmbed("an error occured while executing command.")],
-      ephemeral: true,
+      flags: [MessageFlags.Ephemeral],
     });
 
     logger.error(

@@ -5,7 +5,13 @@ import assert from 'assert';
 import fs from 'fs';
 import yaml from 'yaml';
 
+let commands: Collection<string, Command>|null = null;
+
 export default async function loadCommandIndex(): Promise<Collection<string, Command>> {
+  if (commands !== null) {
+    return commands;
+  }
+  
   const commandIndexPath = path.join(
     process.cwd(),
     "src",
@@ -19,7 +25,7 @@ export default async function loadCommandIndex(): Promise<Collection<string, Com
     fs.readFileSync(commandIndexPath, "utf8"),
   ) as Collection<string, string>;
 
-  const commands = new Collection<string, Command>();
+  commands = new Collection<string, Command>();
   for (const [name, filename] of Object.entries(commandIndex)) {
     const filePath = path.join(
       process.cwd(),
