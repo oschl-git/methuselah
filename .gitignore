@@ -92,3 +92,9 @@ dist/
 config/*
 !config/
 !config/default.yaml
+
+# SQLite
+*.sqlite
+*.sqlite3
+*.db
+*.db3

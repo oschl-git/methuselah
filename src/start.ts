@@ -3,8 +3,10 @@ import * as commandDeployer from "./commands/commandDeployer.js";
 import * as commandProcessor from "./commands/commandProcessor.js";
 import * as eventProcessor from "./events/eventProcessor.js";
 import config from "config";
+import * as database from "./data/database.js";
 import logger from "./services/logger.js";
 import manifest from "../package.json" with { type: "json" };
+
 
 logger.info(`Starting ${manifest.name} ${manifest.version}...`);
 
@@ -17,6 +19,9 @@ const client = new Client({
     GatewayIntentBits.GuildMessageReactions,
   ],
 });
+
+logger.info("Initializing database...");
+await database.initializeDatabase();
 
 logger.info("Loading commands...");
 await commandProcessor.loadCommands(client);

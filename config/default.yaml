@@ -6,6 +6,8 @@
 token: # Discord bot token - never share this with anyone!
 applicationId: # Discord application ID
 registerCommands: true # Whether to register commands with the Discord API on startup
+database:
+  filename: "methuselah.sqlite" # SQLite database file name
 log:
   type: "pretty" # Type of logging output (pretty, json, or hidden)
   minLevel: 3 # Minimum log level for the bot to output logs (1: trace, 2: debug, 3: info, 4: warn, 5: error, 6: fatal)
