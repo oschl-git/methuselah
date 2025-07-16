@@ -29,7 +29,7 @@ export async function setCooldown(
 ): Promise<void> {
   const commandCooldowns =
     cooldowns.get(commandName) || new Collection<string, number>();
-  
+
   commandCooldowns.set(userId, Date.now());
   cooldowns.set(commandName, commandCooldowns);
 

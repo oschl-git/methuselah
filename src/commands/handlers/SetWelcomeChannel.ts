@@ -16,7 +16,7 @@ export default class SetWelcomeChannel implements Command {
   data = new SlashCommandBuilder()
     .setName("setwelcomechannel")
     .setDescription(
-      "Configure whether Methuselah should welcome joining members in this channel.",
+      "Configure whether Methuselah should welcome new members in this channel.",
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
     .setContexts([InteractionContextType.Guild])
@@ -26,11 +26,10 @@ export default class SetWelcomeChannel implements Command {
         .setDescription("Turn welcome messages on or off")
         .setRequired(true),
     ) as SlashCommandBuilder;
+  cooldown = 0;
 
   async execute(interaction: ChatInputCommandInteraction): Promise<void> {
-    const enable = interaction.options.getBoolean("enabled", true);
-
-    if (enable) {
+    if (interaction.options.getBoolean("enabled", true)) {
       await this.enableWelcomeChannel(interaction);
     } else {
       await this.disableWelcomeChannel(interaction);

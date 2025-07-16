@@ -35,7 +35,7 @@ async function processCommand(interaction: Interaction): Promise<void> {
       });
 
       logger.info(
-        `@${interaction.user.username} tried executing /${interaction.commandName} but was on cooldown`,
+        `[@${interaction.user.username}] tried executing /${interaction.commandName} but was on cooldown`,
       );
 
       return;
@@ -49,7 +49,7 @@ async function processCommand(interaction: Interaction): Promise<void> {
     await command.execute(interaction);
 
     logger.info(
-      `@${interaction.user.username} executed /${interaction.commandName}`,
+      `[@${interaction.user.username}] executed /${interaction.commandName}`,
     );
   } catch (error) {
     interaction.reply({
@@ -58,7 +58,7 @@ async function processCommand(interaction: Interaction): Promise<void> {
     });
 
     logger.error(
-      `Failed executing /${interaction.commandName} used by @${interaction.user.username}`,
+      `Failed executing /${interaction.commandName} used by [@${interaction.user.username}]`,
       error,
     );
   }

@@ -12,13 +12,13 @@ export function getEmoji(name: string, guild: Guild): string {
 }
 
 export function tryGetEmoji(name: string, guild: Guild): string | null {
-	try {
-		return getEmoji(name, guild);
-	} catch (error) {
-		if (error instanceof EmojiNotFoundError) {
-			return null;
-		}
-		
-		throw error;
-	}
+  try {
+    return getEmoji(name, guild);
+  } catch (error) {
+    if (error instanceof EmojiNotFoundError) {
+      return null;
+    }
+
+    throw error;
+  }
 }

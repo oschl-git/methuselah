@@ -7,7 +7,6 @@ import * as database from "./data/database.js";
 import logger from "./services/logger.js";
 import manifest from "../package.json" with { type: "json" };
 
-
 logger.info(`Starting ${manifest.name} ${manifest.version}...`);
 
 const client = new Client({
