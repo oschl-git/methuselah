@@ -21,7 +21,6 @@ async function executeEvent<T extends keyof ClientEvents>(
 ): Promise<void> {
   try {
     await event.execute(...args);
-    logger.info(`Event ${event.name} triggered successfully`);
   } catch (error) {
     logger.error(`Failed executing event ${event.name}`, error);
   }
