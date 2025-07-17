@@ -16,7 +16,7 @@ export default class SetWelcomeChannel implements Command {
   data = new SlashCommandBuilder()
     .setName("setwelcomechannel")
     .setDescription(
-      "Configure whether Methuselah should welcome new members in this channel.",
+      "Configures whether Methuselah should welcome new members in this channel.",
     )
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
     .setContexts([InteractionContextType.Guild])

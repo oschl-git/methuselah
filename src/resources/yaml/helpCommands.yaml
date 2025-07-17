@@ -1,9 +1,12 @@
 - definition: "ping"
   description: "a simple testing command."
 
+- definition: "remindrule [number]"
+  description: "reminds a server rule."
+
 - definition: "wisdom"
   description: "presents lifechanging wisdoms."
 
 - definition: "setwelcomechannel [true/false]"
-  description: "configure whether the bot should welcome new members in the current channel."
+  description: "configures whether the bot should welcome new members in the current channel."
   requiredPermission: "ManageChannels"
