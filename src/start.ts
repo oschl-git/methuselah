@@ -1,24 +1,14 @@
-import { Client, GatewayIntentBits } from "discord.js";
+import { Client } from "discord.js";
 import * as commandDeployer from "./commands/commandDeployer.js";
 import * as commandProcessor from "./commands/commandProcessor.js";
 import * as eventProcessor from "./events/eventProcessor.js";
+import client from './services/client.js';
 import config from "config";
 import database from "./data/database.js";
 import logger from "./services/logger.js";
 import manifest from "../package.json" with { type: "json" };
 
 logger.info(`Starting ${manifest.name} ${manifest.version}...`);
-
-const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.GuildMembers,
-    GatewayIntentBits.DirectMessages,
-    GatewayIntentBits.MessageContent,
-    GatewayIntentBits.GuildMessageReactions,
-  ],
-});
 
 logger.info("Initializing database...");
 await database.initialize();
@@ -44,11 +34,12 @@ if (config.get<boolean>("registerCommands")) {
   );
 }
 
+logger.info("Logging in...");
 await client.login(config.get<string>("token"));
 
 await new Promise<void>((resolve) => {
   if (client.isReady()) return resolve();
-  client.once("ready", () => resolve());
+  (client as Client).once("ready", () => resolve());
 });
 
 logger.info(`Logged in as [@${(client as Client<true>).user.tag}]`);
