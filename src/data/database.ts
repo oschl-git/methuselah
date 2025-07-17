@@ -2,23 +2,18 @@ import "reflect-metadata";
 import { DataSource, EntitySchema } from "typeorm";
 import assert from "node:assert";
 import config from "config";
+import DatabaseLogger from "./DatabaseLogger.js";
 import fs from "fs";
 import path from "node:path";
 import yaml from "yaml";
 
-const dataSource = new DataSource({
+export default new DataSource({
   type: "sqlite",
   database: config.get<string>("database.filename"),
   entities: await getEntityIndex(),
-  synchronize: true,
-  logging: false,
+  logger: config.get<boolean>("database.logging") ? new DatabaseLogger() : undefined,
+  synchronize: config.get<boolean>("database.synchronize"),
 });
-
-export async function initializeDatabase(): Promise<void> {
-  if (!dataSource.isInitialized) {
-    await dataSource.initialize();
-  }
-}
 
 async function getEntityIndex(): Promise<EntitySchema<unknown>[]> {
   const eventIndexPath = path.join(process.cwd(), "src", "data", "index.yaml");
@@ -44,5 +39,3 @@ async function getEntityIndex(): Promise<EntitySchema<unknown>[]> {
 
   return entities;
 }
-
-export default dataSource;

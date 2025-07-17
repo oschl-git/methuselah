@@ -1,13 +1,39 @@
 import { Events, GuildMember } from "discord.js";
+import * as emojiLoader from "../../services/emojiLoader.js";
+import database from "../../data/database.js";
 import Event from "./Event.js";
+import WelcomeChannel from "../../data/entities/WelcomeChannel.js";
+import * as resourceLoader from "../../resources/resourceLoader.js";
+
+const welcomeQuotes = resourceLoader.loadYaml<string[]>("welcomeQuotes");
 
 export default class WelcomeMessage implements Event<Events.GuildMemberAdd> {
   name = Events.GuildMemberAdd as const;
   once = false;
 
   async execute(member: GuildMember): Promise<void> {
-    // @TODO implement logic
+    const welcomeChannels = database.getRepository(WelcomeChannel);
 
-    console.log(member.user.username, "has joined the server!");
+    const guildWelcomeChannels = await welcomeChannels.findBy({
+      guildId: member.guild.id,
+    });
+
+    for (const guildWelcomeChannel of guildWelcomeChannels) {
+      const channel = member.guild.channels.cache.get(
+        guildWelcomeChannel.channelId,
+      );
+
+      if (!channel || !channel.isTextBased()) {
+        continue;
+      }
+
+      const emoji = emojiLoader.tryGetEmoji("methuselah", member.guild);
+      const quote =
+        welcomeQuotes[Math.floor(Math.random() * welcomeQuotes.length)];
+
+      channel.send(
+        `> ${emoji} *${quote}*\n**${member} just joined the server.**`,
+      );
+    }
   }
 }

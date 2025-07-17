@@ -8,10 +8,10 @@ const wisdoms = resourceLoader.loadYaml<string[]>("wisdoms");
 export default class Ping implements Command {
   data = new SlashCommandBuilder()
     .setName("wisdom")
-    .setDescription("Displays lifechanging wisdoms.");
+    .setDescription("Presents lifechanging wisdoms.");
 
   async execute(interaction: ChatInputCommandInteraction): Promise<void> {
-    const randomWisdom = wisdoms[Math.floor(Math.random() * wisdoms.length)];
+    const wisdom = wisdoms[Math.floor(Math.random() * wisdoms.length)];
 
     let emoji = "";
     if (interaction.guild !== null) {
@@ -19,7 +19,7 @@ export default class Ping implements Command {
     }
 
     await interaction.reply({
-      content: emoji ? `${emoji} *${randomWisdom}*` : `*${randomWisdom}*`,
+      content: emoji ? `${emoji} *${wisdom}*` : `*${wisdom}*`,
     });
   }
 }
