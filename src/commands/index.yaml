@@ -2,5 +2,6 @@
 - "Help.ts"
 - "Ping.ts"
 - "RemindRule.ts"
+- "SetPermaMessage.ts"
 - "SetWelcomeChannel.ts"
 - "Wisdom.ts"

@@ -1,39 +1,42 @@
 import * as userState from "../services/userState.js";
 
-interface EchoMessageEntry {
+interface AwaitingPermaMessageEntry {
   userId: string;
   channelId: string;
 }
 
-export const echoMessageTimeout = 60;
+export const awaitingPermaMessageTimeout = 60;
 
-const awaitingEchoMessages: EchoMessageEntry[] = [];
+const awaitingPermaMessages: AwaitingPermaMessageEntry[] = [];
 
 export function addEntry(userId: string, channelId: string): void {
   userState.blockUserInteraction(userId);
 
-  awaitingEchoMessages.push({ userId, channelId });
+  awaitingPermaMessages.push({ userId, channelId });
 
-  setTimeout(() => removeEntry(userId, channelId), echoMessageTimeout * 1000);
+  setTimeout(
+    () => removeEntry(userId, channelId),
+    awaitingPermaMessageTimeout * 1000,
+  );
 }
 
 export function removeEntry(userId: string, channelId: string): void {
   userState.unblockUserInteraction(userId);
 
-  const index = awaitingEchoMessages.findIndex(
+  const index = awaitingPermaMessages.findIndex(
     (entry) => entry.userId === userId && entry.channelId === channelId,
   );
 
   if (index !== -1) {
-    awaitingEchoMessages.splice(index, 1);
+    awaitingPermaMessages.splice(index, 1);
   }
 }
 
-export function isAwaitingEchoMessage(
+export function isAwaitingPermaMessage(
   userId: string,
   channelId: string,
 ): boolean {
-  return awaitingEchoMessages.some(
+  return awaitingPermaMessages.some(
     (entry) => entry.userId === userId && entry.channelId === channelId,
   );
 }

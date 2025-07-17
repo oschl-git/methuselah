@@ -1,8 +1,11 @@
 # Methuselah `{{version}}`
+
 ### Available commands:
+
 {{#each commands}}
+
 - `{{this.definition}}` = {{this.description}}
-{{/each}}
+  {{/each}}
 
 **Methuselah is open-source and licensed under the `GNU General Public License v3.0`: https://github.com/oschl-git/methuselah**
 

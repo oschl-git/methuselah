@@ -7,7 +7,7 @@ import * as resourceLoader from "../../resources/resourceLoader.js";
 
 const welcomeQuotes = resourceLoader.loadYaml<string[]>("welcomeQuotes");
 
-export default class GuildMemberAdd implements Event<Events.GuildMemberAdd> {
+export default class WelcomeMessage implements Event<Events.GuildMemberAdd> {
   name = Events.GuildMemberAdd as const;
   once = false;
 

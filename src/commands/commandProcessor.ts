@@ -1,10 +1,11 @@
 import { Client, Events, Interaction, MessageFlags } from "discord.js";
 import * as cooldownManager from "../services/cooldownManager.js";
+import * as userState from "../services/userState.js";
 import CommandNotFoundError from "../errors/CommandNotFoundError.js";
+import CooldownEmbed from "../responses/CooldownEmbed.js";
 import ErrorEmbed from "../responses/ErrorEmbed.js";
 import getCommandIndex from "./commandLoader.js";
 import logger from "../services/logger.js";
-import CooldownEmbed from "../responses/CooldownEmbed.js";
 
 export async function loadCommands(client: Client): Promise<void> {
   client.on(Events.InteractionCreate, processCommand);
@@ -21,6 +22,23 @@ async function processCommand(interaction: Interaction): Promise<void> {
         "Attempted to execute a command that does not exist",
         interaction.commandName,
       );
+    }
+
+    if (userState.isUserBlocked(interaction.user.id)) {
+      interaction.reply({
+        embeds: [
+          new ErrorEmbed(
+            "a pending interaction is blocking you from taking actions.",
+          ),
+        ],
+        flags: [MessageFlags.Ephemeral],
+      });
+
+      logger.info(
+        `[@${interaction.user.username}] tried executing /${interaction.commandName} but was blocked`,
+      );
+
+      return;
     }
 
     if (

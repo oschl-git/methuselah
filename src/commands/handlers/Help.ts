@@ -2,8 +2,8 @@ import {
   ChatInputCommandInteraction,
   SlashCommandBuilder,
   PermissionFlagsBits,
-	MessageFlags,
-	PermissionsBitField,
+  MessageFlags,
+  PermissionsBitField,
 } from "discord.js";
 import * as resourceLoader from "../../resources/resourceLoader.js";
 import Command from "./Command.js";
@@ -29,8 +29,9 @@ export default class Help implements Command {
   async execute(interaction: ChatInputCommandInteraction): Promise<void> {
     const commands: HelpCommandEntry[] = [];
 
-		const memberPermissions = interaction.member?.permissions as Readonly<PermissionsBitField>;
-		for (const command of helpCommands) {
+    const memberPermissions = interaction.member
+      ?.permissions as Readonly<PermissionsBitField>;
+    for (const command of helpCommands) {
       if (
         command.requiredPermission &&
         !memberPermissions.has(
@@ -42,7 +43,7 @@ export default class Help implements Command {
         continue;
       }
 
-			commands.push(command);
+      commands.push(command);
     }
 
     const content = handlebars.compile(markdownBase)({
@@ -52,7 +53,7 @@ export default class Help implements Command {
 
     await interaction.reply({
       embeds: [new InfoEmbed(content)],
-      flags: [MessageFlags.Ephemeral]
+      flags: [MessageFlags.Ephemeral],
     });
   }
 }

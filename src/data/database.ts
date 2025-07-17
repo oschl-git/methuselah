@@ -11,7 +11,9 @@ export default new DataSource({
   type: "sqlite",
   database: config.get<string>("database.filename"),
   entities: await getEntityIndex(),
-  logger: config.get<boolean>("database.logging") ? new DatabaseLogger() : undefined,
+  logger: config.get<boolean>("database.logging")
+    ? new DatabaseLogger()
+    : undefined,
   synchronize: config.get<boolean>("database.synchronize"),
 });
 
