@@ -7,6 +7,10 @@
 - definition: "wisdom"
   description: "presents lifechanging wisdoms."
 
+- definition: "echo"
+  description: "the next message you send will be deleted and written by the bot instead."
+  requiredPermission: "Administrator"
+
 - definition: "setwelcomechannel [true/false]"
   description: "configures whether the bot should welcome new members in the current channel."
   requiredPermission: "ManageChannels"

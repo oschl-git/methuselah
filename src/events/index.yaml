@@ -1,2 +1,2 @@
-- "Echo.ts"
-- "WelcomeMessage.ts"
+- "GuildMemberAdd.ts"
+- "MessageCreate.ts"
