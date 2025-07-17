@@ -5,7 +5,7 @@ import Command from "./Command.js";
 
 const wisdoms = resourceLoader.loadYaml<string[]>("wisdoms");
 
-export default class Ping implements Command {
+export default class Wisdom implements Command {
   data = new SlashCommandBuilder()
     .setName("wisdom")
     .setDescription("Presents lifechanging wisdoms.");

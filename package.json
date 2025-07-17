@@ -19,6 +19,7 @@
   "dependencies": {
     "config": "^4.0.0",
     "discord.js": "^14.21.0",
+    "handlebars": "^4.7.8",
     "reflect-metadata": "^0.2.2",
     "sqlite3": "^5.1.7",
     "tslog": "^4.9.3",
