@@ -13,9 +13,9 @@ export default class Wisdom implements Command {
   async execute(interaction: ChatInputCommandInteraction): Promise<void> {
     const wisdom = wisdoms[Math.floor(Math.random() * wisdoms.length)];
 
-    let emoji = "";
+    let emoji = null;
     if (interaction.guild !== null) {
-      emoji = emojiLoader.tryGetEmoji("methuselah", interaction.guild) ?? "";
+      emoji = emojiLoader.tryGetEmoji("methuselah", interaction.guild);
     }
 
     await interaction.reply({

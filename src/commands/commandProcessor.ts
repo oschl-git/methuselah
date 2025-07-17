@@ -35,7 +35,8 @@ async function processCommand(interaction: Interaction): Promise<void> {
       });
 
       logger.info(
-        `[@${interaction.user.username}] tried executing /${interaction.commandName} but was blocked`,
+        `[@${interaction.user.username}] tried executing /${interaction.commandName} but was blocked by a pending ` +
+          `interaction`,
       );
 
       return;

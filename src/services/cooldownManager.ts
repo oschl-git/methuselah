@@ -10,10 +10,14 @@ export async function isOnCooldown(
   userId: string,
 ): Promise<boolean> {
   const commandCooldowns = cooldowns.get(commandName);
-  if (!commandCooldowns) return false;
+  if (!commandCooldowns) {
+    return false;
+  }
 
   const lastUsed = commandCooldowns.get(userId);
-  if (!lastUsed) return false;
+  if (!lastUsed) {
+    return false;
+  }
 
   const commands = await getCommandIndex();
 

@@ -5,12 +5,12 @@ import {
   PermissionFlagsBits,
   SlashCommandBuilder,
 } from "discord.js";
+import assert from "node:assert";
 import Command from "./Command.js";
 import database from "../../data/database.js";
-import WelcomeChannel from "../../data/entities/WelcomeChannel.js";
-import assert from "node:assert";
-import SuccessEmbed from "../../responses/SuccessEmbed.js";
 import ErrorEmbed from "../../responses/ErrorEmbed.js";
+import SuccessEmbed from "../../responses/SuccessEmbed.js";
+import WelcomeChannel from "../../data/entities/WelcomeChannel.js";
 
 export default class SetWelcomeChannel implements Command {
   data = new SlashCommandBuilder()

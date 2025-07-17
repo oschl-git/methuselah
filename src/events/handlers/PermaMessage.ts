@@ -3,7 +3,7 @@ import * as permaMessageManager from "../../services/permaMessageManager.js";
 import assert from "node:assert";
 import database from "../../data/database.js";
 import Event from "./Event.js";
-import logger from '../../services/logger.js';
+import logger from "../../services/logger.js";
 import PermaMessageEntity from "../../data/entities/PermaMessage.js";
 
 export default class PermaMessage implements Event<Events.MessageCreate> {
@@ -42,9 +42,9 @@ export default class PermaMessage implements Event<Events.MessageCreate> {
   private async handleExistingPermaMessage(message: Message): Promise<void> {
     assert(message.channel instanceof TextChannel);
 
-		if (message.author.bot) {
-			return;
-		}
+    if (message.author.bot) {
+      return;
+    }
 
     const permaMessages = database.getRepository(PermaMessageEntity);
 
@@ -57,29 +57,31 @@ export default class PermaMessage implements Event<Events.MessageCreate> {
     }
 
     if (permaMessage.sentMessageId) {
-			try {
-				const sentMessage = await message.channel.messages.fetch(
-					permaMessage.sentMessageId,
-				);
-	
-				if (sentMessage) {
-					await sentMessage.delete();
-				}
-			} catch (error) {
-				if (error instanceof DiscordAPIError) {
-					logger.warn(`Failed fetching existing permamessage for channel ${message.channelId} from Discord API`)
-				}
+      try {
+        const sentMessage = await message.channel.messages.fetch(
+          permaMessage.sentMessageId,
+        );
 
-				return;
-			}
+        if (sentMessage) {
+          await sentMessage.delete();
+        }
+      } catch (error) {
+        if (error instanceof DiscordAPIError) {
+          logger.warn(
+            `Failed fetching existing permamessage for channel ${message.channelId} from Discord API`,
+          );
+        }
+
+        return;
+      }
     }
 
     const sentMessage = await message.channel.send({
       content: permaMessage.content,
     });
 
-		permaMessage.sentMessageId = sentMessage.id;
+    permaMessage.sentMessageId = sentMessage.id;
 
-		await permaMessages.save(permaMessage);
+    await permaMessages.save(permaMessage);
   }
 }
