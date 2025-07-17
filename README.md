@@ -24,7 +24,9 @@ applicationId: "applicationId"
 ```
 Make sure these files are ignored in all version control and the **token is always kept secret**.
 
-The default configuration file is versioned and should never be modified directly.
+Other configuration options are explained in the default configuration file and can also be overriden.
+
+**The default configuration file is versioned and should never be modified directly.**
 
 ## License
 The bot is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html).
