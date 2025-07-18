@@ -1,5 +1,5 @@
 import { Collection } from "discord.js";
-import getCommandIndex from "../commands/commandLoader.js";
+import * as commandProcessor from "../commands/commandProcessor.js";
 
 const defaultCooldown = 5;
 
@@ -19,11 +19,10 @@ export async function isOnCooldown(
     return false;
   }
 
-  const commands = await getCommandIndex();
-
   return (
     Date.now() - lastUsed <
-    (commands.get(commandName)?.cooldown ?? defaultCooldown) * 1000
+    (commandProcessor.commands.get(commandName)?.cooldown ?? defaultCooldown) *
+      1000
   );
 }
 
@@ -37,10 +36,9 @@ export async function setCooldown(
   commandCooldowns.set(userId, Date.now());
   cooldowns.set(commandName, commandCooldowns);
 
-  const commands = await getCommandIndex();
-
   setTimeout(
     () => commandCooldowns.delete(userId),
-    (commands.get(commandName)?.cooldown ?? defaultCooldown) * 1000,
+    (commandProcessor.commands.get(commandName)?.cooldown ?? defaultCooldown) *
+      1000,
   );
 }

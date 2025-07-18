@@ -1,10 +1,13 @@
 import { Client, ClientEvents } from "discord.js";
 import Event from "./handlers/Event.js";
-import getEventIndex from "./eventLoader.js";
+import importInstancesFromDirectory from "../services/classLoader.js";
 import logger from "../services/logger.js";
+import path from 'path';
 
 export async function loadEvents(client: Client): Promise<void> {
-  const events = await getEventIndex();
+  const events = await importInstancesFromDirectory<Event>(
+    path.join(process.cwd(), "src", "events", "handlers"),
+  );
 
   for (const event of events) {
     if (event.once) {

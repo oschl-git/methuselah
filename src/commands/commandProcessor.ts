@@ -1,13 +1,25 @@
-import { Client, Events, Interaction, MessageFlags } from "discord.js";
+import { Client, Collection, Events, Interaction, MessageFlags } from "discord.js";
+import importInstancesFromDirectory from "../services/classLoader.js";
 import * as cooldownManager from "../services/cooldownManager.js";
 import * as userState from "../services/userState.js";
 import CommandNotFoundError from "../errors/CommandNotFoundError.js";
 import CooldownEmbed from "../responses/CooldownEmbed.js";
 import ErrorEmbed from "../responses/ErrorEmbed.js";
-import getCommandIndex from "./commandLoader.js";
 import logger from "../services/logger.js";
+import path from "path";
+import Command from './handlers/Command.js';
+
+export const commands: Collection<string, Command> = new Collection<string, Command>();
 
 export async function loadCommands(client: Client): Promise<void> {
+  const commandModules = await importInstancesFromDirectory<Command>(
+    path.join(process.cwd(), "src", "commands", "handlers"),
+  );
+
+  for (const module of commandModules) {
+    commands.set(module.data.name, module);
+  }
+
   client.on(Events.InteractionCreate, processCommand);
 }
 
@@ -15,7 +27,7 @@ async function processCommand(interaction: Interaction): Promise<void> {
   if (!interaction.isChatInputCommand()) return;
 
   try {
-    const command = (await getCommandIndex()).get(interaction.commandName);
+    const command = commands.get(interaction.commandName);
 
     if (!command) {
       throw new CommandNotFoundError(
