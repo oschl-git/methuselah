@@ -37,10 +37,10 @@ export default class RemindRule implements Command {
       return;
     }
 
-    let emoji = null;
-    if (interaction.member instanceof GuildMember) {
-      emoji = emojiLoader.tryGetEmoji("methuselah", interaction.member.guild);
-    }
+    const emoji = emojiLoader.tryGetEmoji(
+        "methuselah",
+        interaction.member instanceof GuildMember ? interaction.member.guild : undefined,
+      );
 
     const rule = rules[number - 1];
 
