@@ -1,4 +1,10 @@
-import { Client, Collection, Events, Interaction, MessageFlags } from "discord.js";
+import {
+  Client,
+  Collection,
+  Events,
+  Interaction,
+  MessageFlags,
+} from "discord.js";
 import importInstancesFromDirectory from "../services/classLoader.js";
 import * as cooldownManager from "../services/cooldownManager.js";
 import * as userState from "../services/userState.js";
@@ -7,12 +13,15 @@ import CooldownEmbed from "../responses/CooldownEmbed.js";
 import ErrorEmbed from "../responses/ErrorEmbed.js";
 import logger from "../services/logger.js";
 import path from "path";
-import Command from './handlers/Command.js';
+import CommandHandler from "./handlers/CommandHandler.js";
 
-export const commands: Collection<string, Command> = new Collection<string, Command>();
+export const commands: Collection<string, CommandHandler> = new Collection<
+  string,
+  CommandHandler
+>();
 
 export async function loadCommands(client: Client): Promise<void> {
-  const commandModules = await importInstancesFromDirectory<Command>(
+  const commandModules = await importInstancesFromDirectory<CommandHandler>(
     path.join(process.cwd(), "src", "commands", "handlers"),
   );
 

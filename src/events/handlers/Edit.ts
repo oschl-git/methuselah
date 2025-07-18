@@ -1,10 +1,10 @@
 import { Events, Message, TextChannel } from "discord.js";
 import * as editMessageManager from "../../services/editMessageManager.js";
 import assert from "node:assert";
-import Event from "./Event.js";
+import EventHandler from "./EventHandler.js";
 import logger from "../../services/logger.js";
 
-export default class Edit implements Event<Events.MessageCreate> {
+export default class Edit implements EventHandler<Events.MessageCreate> {
   name = Events.MessageCreate as const;
   once = false;
 

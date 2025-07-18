@@ -6,7 +6,7 @@ import {
   PermissionsBitField,
 } from "discord.js";
 import * as resourceLoader from "../../resources/resourceLoader.js";
-import Command from "./Command.js";
+import CommandHandler from "./CommandHandler.js";
 import handlebars from "handlebars";
 import manifest from "../../../package.json" with { type: "json" };
 import InfoEmbed from "../../responses/InfoEmbed.js";
@@ -21,7 +21,7 @@ const markdownBase = resourceLoader.loadMarkdown("help");
 const helpCommands =
   resourceLoader.loadYaml<HelpCommandEntry[]>("helpCommands");
 
-export default class Help implements Command {
+export default class Help implements CommandHandler {
   data = new SlashCommandBuilder()
     .setName("help")
     .setDescription("Displays information and available commands.");

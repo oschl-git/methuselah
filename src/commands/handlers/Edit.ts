@@ -5,12 +5,12 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 import * as editMessageManager from "../../services/editMessageManager.js";
-import Command from "./Command.js";
+import CommandHandler from "./CommandHandler.js";
 import SuccessEmbed from "../../responses/SuccessEmbed.js";
 import assert from "node:assert";
 import ErrorEmbed from "../../responses/ErrorEmbed.js";
 
-export default class Edit implements Command {
+export default class Edit implements CommandHandler {
   data = new SlashCommandBuilder()
     .setName("edit")
     .setDescription("Edit a message written by the bot.")

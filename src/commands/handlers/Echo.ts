@@ -5,10 +5,10 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 import * as echoMessageManager from "../../services/echoMessageManager.js";
-import Command from "./Command.js";
+import CommandHandler from "./CommandHandler.js";
 import SuccessEmbed from "../../responses/SuccessEmbed.js";
 
-export default class Echo implements Command {
+export default class Echo implements CommandHandler {
   data = new SlashCommandBuilder()
     .setName("echo")
     .setDescription(

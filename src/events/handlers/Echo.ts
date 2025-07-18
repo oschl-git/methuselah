@@ -1,9 +1,9 @@
 import { Events, Message, TextChannel } from "discord.js";
 import * as echoMessageManager from "../../services/echoMessageManager.js";
-import Event from "./Event.js";
+import EventHandler from "./EventHandler.js";
 import assert from "node:assert";
 
-export default class Echo implements Event<Events.MessageCreate> {
+export default class Echo implements EventHandler<Events.MessageCreate> {
   name = Events.MessageCreate as const;
   once = false;
 

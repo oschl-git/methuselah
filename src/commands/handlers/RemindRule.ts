@@ -6,13 +6,13 @@ import {
 } from "discord.js";
 import * as emojiLoader from "../../services/emojiLoader.js";
 import * as resourceLoader from "../../resources/resourceLoader.js";
-import Command from "./Command.js";
+import CommandHandler from "./CommandHandler.js";
 import ErrorEmbed from "../../responses/ErrorEmbed.js";
 import InfoEmbed from "../../responses/InfoEmbed.js";
 
 const rules = resourceLoader.loadYaml<string[]>("rules");
 
-export default class RemindRule implements Command {
+export default class RemindRule implements CommandHandler {
   data = new SlashCommandBuilder()
     .setName("remindrule")
     .setDescription("Reminds a server rule.")

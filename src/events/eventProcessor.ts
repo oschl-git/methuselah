@@ -1,11 +1,11 @@
 import { Client, ClientEvents } from "discord.js";
-import Event from "./handlers/Event.js";
+import EventHandler from "./handlers/EventHandler.js";
 import importInstancesFromDirectory from "../services/classLoader.js";
 import logger from "../services/logger.js";
 import path from 'path';
 
 export async function loadEvents(client: Client): Promise<void> {
-  const events = await importInstancesFromDirectory<Event>(
+  const events = await importInstancesFromDirectory<EventHandler>(
     path.join(process.cwd(), "src", "events", "handlers"),
   );
 
@@ -19,7 +19,7 @@ export async function loadEvents(client: Client): Promise<void> {
 }
 
 async function executeEvent<T extends keyof ClientEvents>(
-  event: Event<T>,
+  event: EventHandler<T>,
   ...args: ClientEvents[T]
 ): Promise<void> {
   try {

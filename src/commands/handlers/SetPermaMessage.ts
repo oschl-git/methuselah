@@ -5,13 +5,13 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 import * as permaMessageManager from "../../services/permaMessageManager.js";
-import Command from "./Command.js";
+import CommandHandler from "./CommandHandler.js";
 import database from "../../data/database.js";
 import SuccessEmbed from "../../responses/SuccessEmbed.js";
 import PermaMessage from "../../data/entities/PermaMessage.js";
 import ErrorEmbed from "../../responses/ErrorEmbed.js";
 
-export default class SetPermaMessage implements Command {
+export default class SetPermaMessage implements CommandHandler {
   data = new SlashCommandBuilder()
     .setName("setpermamessage")
     .setDescription("Enable or disable permamessage in this channel.")

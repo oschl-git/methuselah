@@ -2,11 +2,11 @@ import { DiscordAPIError, Events, Message, TextChannel } from "discord.js";
 import * as permaMessageManager from "../../services/permaMessageManager.js";
 import assert from "node:assert";
 import database from "../../data/database.js";
-import Event from "./Event.js";
+import EventHandler from "./EventHandler.js";
 import logger from "../../services/logger.js";
 import PermaMessageEntity from "../../data/entities/PermaMessage.js";
 
-export default class PermaMessage implements Event<Events.MessageCreate> {
+export default class PermaMessage implements EventHandler<Events.MessageCreate> {
   name = Events.MessageCreate as const;
   once = false;
 

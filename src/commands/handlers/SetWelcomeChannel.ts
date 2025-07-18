@@ -6,13 +6,13 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 import assert from "node:assert";
-import Command from "./Command.js";
+import CommandHandler from "./CommandHandler.js";
 import database from "../../data/database.js";
 import ErrorEmbed from "../../responses/ErrorEmbed.js";
 import SuccessEmbed from "../../responses/SuccessEmbed.js";
 import WelcomeChannel from "../../data/entities/WelcomeChannel.js";
 
-export default class SetWelcomeChannel implements Command {
+export default class SetWelcomeChannel implements CommandHandler {
   data = new SlashCommandBuilder()
     .setName("setwelcomechannel")
     .setDescription(

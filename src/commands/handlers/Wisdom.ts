@@ -1,11 +1,11 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 import * as emojiLoader from "../../services/emojiLoader.js";
 import * as resourceLoader from "../../resources/resourceLoader.js";
-import Command from "./Command.js";
+import CommandHandler from "./CommandHandler.js";
 
 const wisdoms = resourceLoader.loadYaml<string[]>("wisdoms");
 
-export default class Wisdom implements Command {
+export default class Wisdom implements CommandHandler {
   data = new SlashCommandBuilder()
     .setName("wisdom")
     .setDescription("Presents lifechanging wisdoms.");

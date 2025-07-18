@@ -1,13 +1,13 @@
 import { Events, GuildMember } from "discord.js";
 import * as emojiLoader from "../../services/emojiLoader.js";
 import database from "../../data/database.js";
-import Event from "./Event.js";
+import EventHandler from "./EventHandler.js";
 import WelcomeChannel from "../../data/entities/WelcomeChannel.js";
 import * as resourceLoader from "../../resources/resourceLoader.js";
 
 const welcomeQuotes = resourceLoader.loadYaml<string[]>("welcomeQuotes");
 
-export default class WelcomeMessage implements Event<Events.GuildMemberAdd> {
+export default class WelcomeMessage implements EventHandler<Events.GuildMemberAdd> {
   name = Events.GuildMemberAdd as const;
   once = false;
 
