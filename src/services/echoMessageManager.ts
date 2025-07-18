@@ -18,8 +18,6 @@ export function addEntry(userId: string, channelId: string): void {
 }
 
 export function removeEntry(userId: string, channelId: string): void {
-  userState.unblockUserInteraction(userId);
-
   const index = awaitingEchoMessages.findIndex(
     (entry) => entry.userId === userId && entry.channelId === channelId,
   );
@@ -27,6 +25,8 @@ export function removeEntry(userId: string, channelId: string): void {
   if (index !== -1) {
     awaitingEchoMessages.splice(index, 1);
   }
+
+  userState.unblockUserInteraction(userId);
 }
 
 export function isAwaitingEchoMessage(

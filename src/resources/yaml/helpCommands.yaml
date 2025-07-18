@@ -11,6 +11,10 @@
   description: "the next message you send will be deleted and written by the bot instead."
   requiredPermission: "ManageMessages"
 
+- definition: "edit [message ID]"
+  description: "edit a message written by the bot."
+  requiredPermission: "ManageMessages"
+
 - definition: "setpermamessage [true/false]"
   description: "if true, the next message you send will be deleted and set as the permamessage for this channel, if false, it will be disabled."
   requiredPermission: "ManageChannels"
