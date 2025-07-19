@@ -34,12 +34,9 @@ if (config.get<boolean>("registerCommands")) {
   );
 }
 
-logger.info("Logging in...");
-await client.login(config.get<string>("token"));
-
 await new Promise<void>((resolve) => {
   if (client.isReady()) return resolve();
   (client as Client).once("ready", () => resolve());
 });
 
-logger.info(`Logged in as [@${(client as Client<true>).user.tag}]`);
+logger.info(`Logged in as [@${client.user.tag}]`);
