@@ -11,7 +11,7 @@
   "scripts": {
     "dev": "NODE_ENV=development tsx src/start.ts",
     "build": "tsc",
-    "prod": "NODE_ENV=production node dist/start.js",
+    "prod": "NODE_ENV=production tsx src/start.ts",
     "typeorm": "typeorm-ts-node-esm",
     "eslint": "eslint src",
     "prettier": "prettier src --write",
