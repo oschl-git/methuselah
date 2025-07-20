@@ -1,6 +1,5 @@
 import { Events, Message, TextChannel } from "discord.js";
 import * as editMessageManager from "../../services/editMessageManager.js";
-import assert from "node:assert";
 import EventHandler from "./EventHandler.js";
 import logger from "../../services/logger.js";
 import { fetchDiscordAttachments } from "../../services/fetchDiscordAttachments.js";
@@ -10,7 +9,9 @@ export default class Edit implements EventHandler<Events.MessageCreate> {
   once = false;
 
   async execute(message: Message): Promise<void> {
-    assert(message.channel instanceof TextChannel);
+    if (!(message.channel instanceof TextChannel)) {
+      return;
+    }
 
     if (message.author.bot) {
       return;
