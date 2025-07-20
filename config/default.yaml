@@ -12,6 +12,7 @@ database:
   filename: "methuselah.sqlite" # SQLite database file name
   logging: false # Enable database query logging
   synchronize: false # Whether to automatically synchronize the database schema on startup
+  migrationsRun: true # Whether to run migrations on startup
 
 log:
   type: "pretty" # Type of logging output (pretty, json, or hidden)

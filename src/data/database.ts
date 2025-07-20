@@ -12,4 +12,5 @@ export default new DataSource({
     ? new DatabaseLogger()
     : undefined,
   synchronize: config.get<boolean>("database.synchronize"),
+  migrationsRun: config.get<boolean>("database.migrationsRun"),
 });

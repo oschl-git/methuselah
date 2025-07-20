@@ -11,18 +11,22 @@
   description: "the next message you send will be deleted and written by the bot instead."
   requiredPermission: "ManageMessages"
 
-- definition: "edit [message ID]"
+- definition: "edit [message_id]"
   description: "edit a message written by the bot."
   requiredPermission: "ManageMessages"
 
-- definition: "setpermamessage [true/false]"
+- definition: "setpermamessage [True/False]"
   description: "if true, the next message you send will be deleted and set as the permamessage for this channel, if false, it will be disabled."
   requiredPermission: "ManageChannels"
 
-- definition: "setwelcomechannel [true/false]"
+- definition: "setwelcomechannel [True/False]"
   description: "configures whether the bot should welcome new members in the current channel."
   requiredPermission: "ManageChannels"
 
-- definition: "setreactionrole [emoji name] [role] [optional message ID]"
-  description: "sets up a reaction role."
+- definition: "setreactionrole [emoji_name] [role] [message_id (optional)]"
+  description: "sets up a reaction role, if no message ID specified, the last message in the current channel will be used."
+  requiredPermission: "ManageRoles"
+
+- definition: "deletereactionrole [emoji name] [message_id (optional)]"
+  description: "deletes a reaction role, if no message ID specified, the last message in the current channel will be used."
   requiredPermission: "ManageRoles"
