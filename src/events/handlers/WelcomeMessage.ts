@@ -43,7 +43,7 @@ export default class WelcomeMessage
         welcomeQuotes[Math.floor(Math.random() * welcomeQuotes.length)];
 
       await channel.send(
-        `${emoji} *${quote}*\n> **${member} just joined the server.**`,
+        `> ${emoji} *${quote}*\n> **${member} just joined the server.**`,
       );
 
       logger.info(
