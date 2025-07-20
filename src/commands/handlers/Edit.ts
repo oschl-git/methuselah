@@ -36,7 +36,7 @@ export default class Edit implements CommandHandler {
         flags: [MessageFlags.Ephemeral],
       });
 
-			return;
+      return;
     }
 
     editMessageManager.addEntry(

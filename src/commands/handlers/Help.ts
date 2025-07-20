@@ -33,6 +33,7 @@ export default class Help implements CommandHandler {
 
     const memberPermissions = interaction.member
       ?.permissions as Readonly<PermissionsBitField>;
+
     for (const command of helpCommands) {
       if (
         command.requiredPermission &&

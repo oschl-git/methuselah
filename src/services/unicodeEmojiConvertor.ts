@@ -1,4 +1,4 @@
-import { EmojiConvertor } from 'emoji-js';
+import { EmojiConvertor } from "emoji-js";
 
 const emojiConvertor = new EmojiConvertor();
 

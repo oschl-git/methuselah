@@ -18,7 +18,7 @@
     "prettier-check": "prettier src --check"
   },
   "dependencies": {
-    "config": "^4.0.0",
+    "config": "^4.0.1",
     "discord.js": "^14.21.0",
     "emoji-js": "^3.8.1",
     "handlebars": "^4.7.8",
@@ -33,12 +33,12 @@
     "@tsconfig/node20": "^20.1.6",
     "@types/config": "^3.3.5",
     "@types/emoji-js": "^3.5.2",
-    "@types/node": "^24.0.13",
+    "@types/node": "^24.0.15",
     "eslint": "^9.31.0",
     "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.36.0"
+    "typescript-eslint": "^8.37.0"
   }
 }

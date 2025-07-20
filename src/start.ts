@@ -2,7 +2,7 @@ import { Client } from "discord.js";
 import * as commandDeployer from "./commands/commandDeployer.js";
 import * as commandProcessor from "./commands/commandProcessor.js";
 import * as eventProcessor from "./events/eventProcessor.js";
-import client from './services/client.js';
+import client from "./services/client.js";
 import config from "config";
 import database from "./data/database.js";
 import logger from "./services/logger.js";

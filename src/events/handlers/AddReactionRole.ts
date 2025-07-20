@@ -1,8 +1,9 @@
 import { Events, MessageReaction, User } from "discord.js";
-import EventHandler from "./EventHandler.js";
-import database from "../../data/database.js";
-import ReactionRole from "../../data/entities/ReactionRole.js";
 import assert from "node:assert";
+import database from "../../data/database.js";
+import EventHandler from "./EventHandler.js";
+import logger from "../../services/logger.js";
+import ReactionRole from "../../data/entities/ReactionRole.js";
 
 export default class AddReactionRole
   implements EventHandler<Events.MessageReactionAdd>
@@ -40,6 +41,10 @@ export default class AddReactionRole
 
     const member = await reaction.message.guild.members.fetch(user.id);
 
-    member.roles.add(reactionRole.roleId);
+    await member.roles.add(reactionRole.roleId);
+
+    logger.info(
+      `Added role ${reactionRole.roleId} to user [@${user.username}] for reaction ${emoji} on message ${reaction.message.id}`,
+    );
   }
 }

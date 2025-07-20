@@ -52,5 +52,5 @@ export function getMessageIdForEdit(
     (entry) => entry.userId === userId && entry.channelId === channelId,
   );
 
-	return awaitingEdit ? awaitingEdit.messageId : null;
+  return awaitingEdit ? awaitingEdit.messageId : null;
 }

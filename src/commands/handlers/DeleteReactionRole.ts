@@ -14,7 +14,7 @@ import ErrorEmbed from "../../responses/ErrorEmbed.js";
 import SuccessEmbed from "../../responses/SuccessEmbed.js";
 import unicodeEmojiConvertor from "../../services/unicodeEmojiConvertor.js";
 import ReactionRole from "../../data/entities/ReactionRole.js";
-import WarningEmbed from '../../responses/WarningEmbed.js';
+import WarningEmbed from "../../responses/WarningEmbed.js";
 
 export default class DeleteReactionRole implements CommandHandler {
   data = new SlashCommandBuilder()
@@ -59,6 +59,7 @@ export default class DeleteReactionRole implements CommandHandler {
             ],
             flags: [MessageFlags.Ephemeral],
           });
+
           return;
         }
       } else {
@@ -74,9 +75,11 @@ export default class DeleteReactionRole implements CommandHandler {
     });
 
     if (reactionRole === null) {
-      interaction.reply({
+      await interaction.reply({
         embeds: [
-          new ErrorEmbed("reaction role on this message does not exist for this emoji."),
+          new ErrorEmbed(
+            "reaction role on this message does not exist for this emoji.",
+          ),
         ],
         flags: [MessageFlags.Ephemeral],
       });
@@ -89,15 +92,19 @@ export default class DeleteReactionRole implements CommandHandler {
     const message = await interaction.channel?.messages.fetch(messageId);
 
     if (!message) {
-      interaction.reply({
-        embeds: [new WarningEmbed("removed from database, but message could not be found.")],
+      await interaction.reply({
+        embeds: [
+          new WarningEmbed(
+            "removed from database, but message could not be found.",
+          ),
+        ],
         flags: [MessageFlags.Ephemeral],
       });
 
       return;
     }
 
-    message.reactions.cache.get(emoji)?.remove();
+    await message.reactions.cache.get(emoji)?.remove();
 
     interaction.reply({
       embeds: [new SuccessEmbed("reaction role removed.")],

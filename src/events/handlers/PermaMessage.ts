@@ -6,7 +6,9 @@ import EventHandler from "./EventHandler.js";
 import logger from "../../services/logger.js";
 import PermaMessageEntity from "../../data/entities/PermaMessage.js";
 
-export default class PermaMessage implements EventHandler<Events.MessageCreate> {
+export default class PermaMessage
+  implements EventHandler<Events.MessageCreate>
+{
   name = Events.MessageCreate as const;
   once = false;
 
@@ -36,7 +38,11 @@ export default class PermaMessage implements EventHandler<Events.MessageCreate> 
 
     await permaMessages.save(permaMessage);
 
-    message.delete();
+    await message.delete();
+
+    logger.info(
+      `User ${message.author} set permamessage for channel ${message.channelId}`,
+    );
   }
 
   private async handleExistingPermaMessage(message: Message): Promise<void> {
@@ -83,5 +89,7 @@ export default class PermaMessage implements EventHandler<Events.MessageCreate> 
     permaMessage.sentMessageId = sentMessage.id;
 
     await permaMessages.save(permaMessage);
+
+    logger.info(`Handled permamessage in channel ${message.channelId}`);
   }
 }

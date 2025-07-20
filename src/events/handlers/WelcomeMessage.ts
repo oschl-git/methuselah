@@ -1,9 +1,10 @@
 import { Events, GuildMember } from "discord.js";
 import * as emojiLoader from "../../services/emojiLoader.js";
+import * as resourceLoader from "../../resources/resourceLoader.js";
 import database from "../../data/database.js";
 import EventHandler from "./EventHandler.js";
+import logger from "../../services/logger.js";
 import WelcomeChannel from "../../data/entities/WelcomeChannel.js";
-import * as resourceLoader from "../../resources/resourceLoader.js";
 
 const welcomeQuotes = resourceLoader.loadYaml<string[]>("welcomeQuotes");
 
@@ -33,11 +34,16 @@ export default class WelcomeMessage
         "methuselah",
         member.guild,
       );
+
       const quote =
         welcomeQuotes[Math.floor(Math.random() * welcomeQuotes.length)];
 
-      channel.send(
-        `> ${emoji} *${quote}*\n**${member} just joined the server.**`,
+      await channel.send(
+        `${emoji} *${quote}*\n> **${member} just joined the server.**`,
+      );
+
+      logger.info(
+        `Sent welcome message for [@${member.user.username}] in channel ${guildWelcomeChannel.channelId}`,
       );
     }
   }

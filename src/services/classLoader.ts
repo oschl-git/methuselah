@@ -15,15 +15,15 @@ export default async function importInstancesFromDirectory<T>(
     const module = await import(filePath);
     const Constructor = module.default as new (...args: unknown[]) => T;
 
-		let instance;
+    let instance;
     try {
       instance = new Constructor();
-		} catch (error) {
-			if (!(error instanceof TypeError)) {
-				throw error;
-			}
+    } catch (error) {
+      if (!(error instanceof TypeError)) {
+        throw error;
+      }
 
-			continue;
+      continue;
     }
 
     instances.push(instance);

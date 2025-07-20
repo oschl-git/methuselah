@@ -1,7 +1,8 @@
 import { Events, MessageReaction, User } from "discord.js";
-import EventHandler from "./EventHandler.js";
 import assert from "node:assert";
 import database from "../../data/database.js";
+import EventHandler from "./EventHandler.js";
+import logger from "../../services/logger.js";
 import ReactionRole from "../../data/entities/ReactionRole.js";
 
 export default class RemoveReactionRole
@@ -40,6 +41,11 @@ export default class RemoveReactionRole
 
     const member = await reaction.message.guild.members.fetch(user.id);
 
-    member.roles.remove(reactionRole.roleId);
+    await member.roles.remove(reactionRole.roleId);
+
+    logger.info(
+      `Removed role ${reactionRole.roleId} from user [@${user.username}] for reaction ${emoji} on message ` +
+        `${reaction.message.id}`,
+    );
   }
 }

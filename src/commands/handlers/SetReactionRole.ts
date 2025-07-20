@@ -57,7 +57,7 @@ export default class SetReactionRole implements CommandHandler {
         emoji = unicodeEmojiConvertor.replace_colons(`:${emojiName}:`);
 
         if (emoji === `:${emojiName}:`) {
-          interaction.reply({
+          await interaction.reply({
             embeds: [
               new ErrorEmbed(
                 `emoji not found, make sure you input the emoji name and not the emoji object.`,
@@ -65,6 +65,7 @@ export default class SetReactionRole implements CommandHandler {
             ],
             flags: [MessageFlags.Ephemeral],
           });
+
           return;
         }
       } else {
@@ -80,7 +81,7 @@ export default class SetReactionRole implements CommandHandler {
     });
 
     if (existingReactionRole !== null) {
-      interaction.reply({
+      await interaction.reply({
         embeds: [
           new ErrorEmbed("reaction role already exists for this emoji."),
         ],
@@ -108,9 +109,9 @@ export default class SetReactionRole implements CommandHandler {
       return;
     }
 
-    message.react(emoji);
+    await message.react(emoji);
 
-    interaction.reply({
+    await interaction.reply({
       embeds: [new SuccessEmbed("reaction role set up successfully.")],
       flags: [MessageFlags.Ephemeral],
     });

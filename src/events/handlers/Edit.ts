@@ -26,7 +26,7 @@ export default class Edit implements EventHandler<Events.MessageCreate> {
       messageId,
     );
 
-    message.delete();
+    await message.delete();
 
     let originalMessage;
     try {
@@ -42,5 +42,9 @@ export default class Edit implements EventHandler<Events.MessageCreate> {
       content: message.content,
       files: message.attachments.map((attachment) => attachment.url),
     });
+
+    logger.info(
+      `User [@${message.author.username}] edited message ${message.id} in channel ${message.channelId}`,
+    );
   }
 }

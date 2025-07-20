@@ -67,7 +67,7 @@ export default class SetWelcomeChannel implements CommandHandler {
 
     await welcomeChannels.save(welcomeChannel);
 
-    interaction.reply({
+    await interaction.reply({
       embeds: [new SuccessEmbed("welcome channel set.")],
       flags: [MessageFlags.Ephemeral],
     });
@@ -89,7 +89,7 @@ export default class SetWelcomeChannel implements CommandHandler {
     });
 
     if (existingWelcomeChannel === null) {
-      interaction.reply({
+      await interaction.reply({
         embeds: [new ErrorEmbed("this channel is not a welcome channel.")],
         flags: [MessageFlags.Ephemeral],
       });
@@ -99,7 +99,7 @@ export default class SetWelcomeChannel implements CommandHandler {
 
     await welcomeChannels.remove(existingWelcomeChannel);
 
-    interaction.reply({
+    await interaction.reply({
       embeds: [new SuccessEmbed("welcome channel removed.")],
       flags: [MessageFlags.Ephemeral],
     });

@@ -1,7 +1,8 @@
 import { Events, Message, TextChannel } from "discord.js";
 import * as echoMessageManager from "../../services/echoMessageManager.js";
-import EventHandler from "./EventHandler.js";
 import assert from "node:assert";
+import EventHandler from "./EventHandler.js";
+import logger from "../../services/logger.js";
 
 export default class Echo implements EventHandler<Events.MessageCreate> {
   name = Events.MessageCreate as const;
@@ -21,11 +22,15 @@ export default class Echo implements EventHandler<Events.MessageCreate> {
 
     echoMessageManager.removeEntry(message.author.id, message.channelId);
 
-    message.delete();
+    await message.delete();
 
-    message.channel.send({
+    await message.channel.send({
       content: message.content,
       files: message.attachments.map((attachment) => attachment.url),
     });
+
+    logger.info(
+      `Echoed message from [@${message.author.username}] in channel ${message.channelId}`,
+    );
   }
 }

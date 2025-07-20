@@ -26,7 +26,7 @@ export default class SetPermaMessage implements CommandHandler {
     ) as SlashCommandBuilder;
 
   async execute(interaction: ChatInputCommandInteraction): Promise<void> {
-    if (interaction.options.getBoolean("enabled", false) === false) {
+    if (!interaction.options.getBoolean("enabled", false)) {
       await this.disablePermaMessage(interaction);
     } else {
       await this.enablePermaMessage(interaction);
