@@ -1,7 +1,6 @@
 import { Events, Message, TextChannel } from "discord.js";
 import { fetchDiscordAttachments } from "../../services/fetchDiscordAttachments.js";
 import * as echoMessageManager from "../../services/echoMessageManager.js";
-import assert from "node:assert";
 import EventHandler from "./EventHandler.js";
 import logger from "../../services/logger.js";
 
@@ -10,7 +9,9 @@ export default class Echo implements EventHandler<Events.MessageCreate> {
   once = false;
 
   async execute(message: Message): Promise<void> {
-    assert(message.channel instanceof TextChannel);
+    if (!(message.channel instanceof TextChannel)) {
+      return;
+    }
 
     if (message.author.bot) {
       return;
