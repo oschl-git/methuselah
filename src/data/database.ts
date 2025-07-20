@@ -7,7 +7,11 @@ import path from "path";
 export default new DataSource({
   type: "sqlite",
   database: config.get<string>("database.filename"),
-  entities: [path.join(process.cwd(), "src", "data", "entities", "*.ts")],
+  entities: [
+    process.env.NODE_ENV !== "production"
+      ? path.join(process.cwd(), "src", "data", "entities", "*.js")
+      : path.join(process.cwd(), "src", "data", "entities", "*.ts"),
+  ],
   logger: config.get<boolean>("database.logging")
     ? new DatabaseLogger()
     : undefined,
