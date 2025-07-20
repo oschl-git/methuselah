@@ -75,8 +75,8 @@ export default class SetReactionRole implements CommandHandler {
     const reactionRoles = database.getRepository(ReactionRole);
 
     const existingReactionRole = await reactionRoles.findOneBy({
-      messageId,
-      emoji,
+      messageId: messageId,
+      emoji: emoji,
     });
 
     if (existingReactionRole !== null) {
