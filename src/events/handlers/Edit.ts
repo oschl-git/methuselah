@@ -3,6 +3,7 @@ import * as editMessageManager from "../../services/editMessageManager.js";
 import assert from "node:assert";
 import EventHandler from "./EventHandler.js";
 import logger from "../../services/logger.js";
+import { fetchDiscordAttachments } from "../../services/fetchDiscordAttachments.js";
 
 export default class Edit implements EventHandler<Events.MessageCreate> {
   name = Events.MessageCreate as const;
@@ -30,6 +31,10 @@ export default class Edit implements EventHandler<Events.MessageCreate> {
       messageId,
     );
 
+    const attachments = await fetchDiscordAttachments(
+      message.attachments.values(),
+    );
+
     await message.delete();
 
     let originalMessage;
@@ -44,7 +49,7 @@ export default class Edit implements EventHandler<Events.MessageCreate> {
 
     await originalMessage.edit({
       content: message.content,
-      files: message.attachments.map((attachment) => attachment.url),
+      files: attachments,
     });
 
     logger.info(

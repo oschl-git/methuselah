@@ -1,4 +1,5 @@
 import { Events, Message, TextChannel } from "discord.js";
+import { fetchDiscordAttachments } from "../../services/fetchDiscordAttachments.js";
 import * as echoMessageManager from "../../services/echoMessageManager.js";
 import assert from "node:assert";
 import EventHandler from "./EventHandler.js";
@@ -26,11 +27,15 @@ export default class Echo implements EventHandler<Events.MessageCreate> {
 
     echoMessageManager.removeEntry(message.author.id, message.channelId);
 
+    const attachments = await fetchDiscordAttachments(
+      message.attachments.values(),
+    );
+
     await message.delete();
 
     await message.channel.send({
       content: message.content,
-      files: message.attachments.map((attachment) => attachment.url),
+      files: attachments,
     });
 
     logger.info(
