@@ -13,6 +13,10 @@ export default class PermaMessage
   once = false;
 
   async execute(message: Message): Promise<void> {
+    if (message.author.bot) {
+      return;
+    }
+
     if (
       permaMessageManager.isAwaitingPermaMessage(
         message.author.id,

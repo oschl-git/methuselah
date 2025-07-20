@@ -24,6 +24,10 @@ export default class AddReactionRole
       return;
     }
 
+    if (reaction.message.author?.bot) {
+      return;
+    }
+
     const emoji = reaction.emoji.id ?? reaction.emoji.name;
 
     assert(emoji !== null, "Emoji must be defined");
@@ -44,7 +48,8 @@ export default class AddReactionRole
     await member.roles.add(reactionRole.roleId);
 
     logger.info(
-      `Added role ${reactionRole.roleId} to user [@${user.username}] for reaction ${emoji} on message ${reaction.message.id}`,
+      `Added role ${reactionRole.roleId} to user [@${user.username}] for reaction ${emoji} on message ` +
+        `${reaction.message.id}`,
     );
   }
 }

@@ -11,6 +11,10 @@ export default class Edit implements EventHandler<Events.MessageCreate> {
   async execute(message: Message): Promise<void> {
     assert(message.channel instanceof TextChannel);
 
+    if (message.author.bot) {
+      return;
+    }
+
     const messageId = editMessageManager.getMessageIdForEdit(
       message.author.id,
       message.channelId,

@@ -15,6 +15,10 @@ export default class WelcomeMessage
   once = false;
 
   async execute(member: GuildMember): Promise<void> {
+    if (member.user.bot) {
+      return;
+    }
+
     const welcomeChannels = database.getRepository(WelcomeChannel);
 
     const guildWelcomeChannels = await welcomeChannels.findBy({

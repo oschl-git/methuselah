@@ -12,6 +12,10 @@ export default class RemoveReactionRole
   once = false;
 
   async execute(reaction: MessageReaction, user: User): Promise<void> {
+    if (user.bot) {
+      return;
+    }
+
     if (reaction.partial) {
       await reaction.fetch();
     }
@@ -21,6 +25,10 @@ export default class RemoveReactionRole
     }
 
     if (reaction.message.guild === null) {
+      return;
+    }
+
+    if (reaction.message.author?.bot) {
       return;
     }
 
