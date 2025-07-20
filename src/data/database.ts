@@ -8,7 +8,7 @@ export default new DataSource({
   type: "sqlite",
   database: config.get<string>("database.filename"),
   entities: [
-    process.env.NODE_ENV !== "production"
+    process.env.NODE_ENV === "production"
       ? path.join(process.cwd(), "src", "data", "entities", "*.js")
       : path.join(process.cwd(), "src", "data", "entities", "*.ts"),
   ],
