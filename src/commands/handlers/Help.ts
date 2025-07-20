@@ -4,6 +4,7 @@ import {
   PermissionFlagsBits,
   MessageFlags,
   PermissionsBitField,
+  InteractionContextType,
 } from "discord.js";
 import * as resourceLoader from "../../resources/resourceLoader.js";
 import CommandHandler from "./CommandHandler.js";
@@ -24,6 +25,7 @@ const helpCommands =
 export default class Help implements CommandHandler {
   data = new SlashCommandBuilder()
     .setName("help")
+    .setContexts(InteractionContextType.Guild)
     .setDescription("Displays information and available commands.");
 
   async execute(interaction: ChatInputCommandInteraction): Promise<void> {

@@ -7,7 +7,9 @@ import * as resourceLoader from "../../resources/resourceLoader.js";
 
 const welcomeQuotes = resourceLoader.loadYaml<string[]>("welcomeQuotes");
 
-export default class WelcomeMessage implements EventHandler<Events.GuildMemberAdd> {
+export default class WelcomeMessage
+  implements EventHandler<Events.GuildMemberAdd>
+{
   name = Events.GuildMemberAdd as const;
   once = false;
 
@@ -27,7 +29,10 @@ export default class WelcomeMessage implements EventHandler<Events.GuildMemberAd
         continue;
       }
 
-      const emoji = emojiLoader.tryGetEmoji("methuselah", member.guild);
+      const emoji = await emojiLoader.tryGetEmojiString(
+        "methuselah",
+        member.guild,
+      );
       const quote =
         welcomeQuotes[Math.floor(Math.random() * welcomeQuotes.length)];
 

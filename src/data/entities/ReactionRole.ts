@@ -8,9 +8,6 @@ export default class ReactionRole {
   @PrimaryColumn({ type: "varchar" })
   emoji!: string;
 
-  @Column({ type: "boolean" })
-  custom!: boolean;
-
   @Column({ type: "varchar", length: 19 })
   roleId!: string;
 }

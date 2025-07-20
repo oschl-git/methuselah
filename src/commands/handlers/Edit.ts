@@ -1,5 +1,6 @@
 import {
   ChatInputCommandInteraction,
+  InteractionContextType,
   MessageFlags,
   PermissionFlagsBits,
   SlashCommandBuilder,
@@ -15,6 +16,7 @@ export default class Edit implements CommandHandler {
     .setName("edit")
     .setDescription("Edit a message written by the bot.")
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
+    .setContexts(InteractionContextType.Guild)
     .addStringOption((option) =>
       option
         .setName("message_id")

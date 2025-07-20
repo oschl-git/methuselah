@@ -13,7 +13,10 @@ export default class Wisdom implements CommandHandler {
   async execute(interaction: ChatInputCommandInteraction): Promise<void> {
     const wisdom = wisdoms[Math.floor(Math.random() * wisdoms.length)];
 
-    const emoji = emojiLoader.tryGetEmoji("methuselah", interaction.guild ?? undefined);
+    const emoji = await emojiLoader.tryGetEmojiString(
+      "methuselah",
+      interaction.guild ?? undefined,
+    );
 
     await interaction.reply({
       content: emoji ? `> ${emoji} *${wisdom}*` : `*> ${wisdom}*`,

@@ -22,3 +22,7 @@
 - definition: "setwelcomechannel [true/false]"
   description: "configures whether the bot should welcome new members in the current channel."
   requiredPermission: "ManageChannels"
+
+- definition: "setreactionrole [emoji name] [role] [optional message ID]"
+  description: "sets up a reaction role."
+  requiredPermission: "ManageRoles"

@@ -1,5 +1,6 @@
 import {
   ChatInputCommandInteraction,
+  InteractionContextType,
   MessageFlags,
   PermissionFlagsBits,
   SlashCommandBuilder,
@@ -16,6 +17,7 @@ export default class SetPermaMessage implements CommandHandler {
     .setName("setpermamessage")
     .setDescription("Enable or disable permamessage in this channel.")
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels)
+    .setContexts(InteractionContextType.Guild)
     .addBooleanOption((option) =>
       option
         .setName("enabled")

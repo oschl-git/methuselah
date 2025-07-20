@@ -1,5 +1,6 @@
 import {
   ChatInputCommandInteraction,
+  InteractionContextType,
   MessageFlags,
   PermissionFlagsBits,
   SlashCommandBuilder,
@@ -14,7 +15,8 @@ export default class Echo implements CommandHandler {
     .setDescription(
       "The next message you send will be deleted and written by the bot instead.",
     )
-    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages);
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
+    .setContexts(InteractionContextType.Guild);
 
   async execute(interaction: ChatInputCommandInteraction): Promise<void> {
     echoMessageManager.addEntry(interaction.user.id, interaction.channelId);

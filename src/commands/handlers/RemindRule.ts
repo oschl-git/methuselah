@@ -37,7 +37,7 @@ export default class RemindRule implements CommandHandler {
       return;
     }
 
-    const emoji = emojiLoader.tryGetEmoji(
+    const emoji = await emojiLoader.tryGetEmojiString(
         "methuselah",
         interaction.member instanceof GuildMember ? interaction.member.guild : undefined,
       );
