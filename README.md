@@ -9,11 +9,13 @@ It uses the DiscordJS library to interact with the Discord API, and is written e
 Given the nature of the bot, it isn't particularly useful for any other Discord server, but many of its features and code can be easily adapted for your own needs.
 
 ## Features
+- assigning and removing roles on message reactions
+- *permamessages*, messages posted by the bot which always stay "pinned" at the bottom of a channel
 - welcoming people who join the server with a random quote from the game
 - reminding server rules
 - sending lifechanging wisdoms
-- *permamessages*, messages posted by the bot which always stay "pinned" at the bottom of a channel
 - echoing whatever administrators write
+- editing existing messages written by the bot
 - command cooldowns/spam prevention
 
 ## Configuration

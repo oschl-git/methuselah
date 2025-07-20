@@ -47,7 +47,7 @@ export default class RemindRule implements CommandHandler {
     const rule = rules[number - 1];
 
     await interaction.reply({
-      content: `> ${emoji} *remember rule ${number}:*\n`,
+      content: `${emoji} *remember rule ${number}:*\n`,
       embeds: [new InfoEmbed(`**${rule}**`)],
     });
   }

@@ -24,7 +24,7 @@ export default class AddReactionRole
       return;
     }
 
-    if (reaction.message.author?.bot) {
+    if (user.bot) {
       return;
     }
 

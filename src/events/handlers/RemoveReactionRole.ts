@@ -28,7 +28,7 @@ export default class RemoveReactionRole
       return;
     }
 
-    if (reaction.message.author?.bot) {
+    if (user.bot) {
       return;
     }
 

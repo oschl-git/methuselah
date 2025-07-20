@@ -19,7 +19,7 @@ export default class Wisdom implements CommandHandler {
     );
 
     await interaction.reply({
-      content: emoji ? `> ${emoji} *${wisdom}*` : `*> ${wisdom}*`,
+      content: emoji ? `${emoji} *${wisdom}*` : `*${wisdom}*`,
     });
   }
 }
