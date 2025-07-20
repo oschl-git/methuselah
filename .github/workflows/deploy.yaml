@@ -1,0 +1,36 @@
+name: Methuselah deployment
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -p "${{ secrets.SSH_PORT }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+        shell: bash
+
+      - name: Deploy via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=yes \
+              -i ~/.ssh/id_rsa \
+              -p "${{ secrets.SSH_PORT }}" \
+              "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" << 'EOF'
+            cd /home/discordbot/methuselah
+            
+            git pull origin production
+            yarn install
+            sudo systemctl restart methuselah
+          EOF
+        shell: bash
