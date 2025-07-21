@@ -1,4 +1,4 @@
-name: Methuselah deployment
+name: Deploy to production
 
 on:
   push:
@@ -9,7 +9,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: webfactory/ssh-agent@v0.9.0
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
@@ -30,8 +31,8 @@ jobs:
               -i ~/.ssh/id_rsa \
               -p "${{ secrets.SSH_PORT }}" \
               "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" << 'EOF'
-            cd /home/discordbot/methuselah
             
+            cd /home/discordbot/methuselah
             git pull origin production
             yarn install
             sudo systemctl restart methuselah
