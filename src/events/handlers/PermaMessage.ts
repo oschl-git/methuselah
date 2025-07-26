@@ -30,7 +30,9 @@ export default class PermaMessage
   }
 
   private async setPermaMessage(message: Message): Promise<void> {
-    assert(message.channel instanceof TextChannel);
+    if (!(message.channel instanceof TextChannel)) {
+      return;
+    }
 
     permaMessageManager.removeEntry(message.author.id, message.channelId);
 
@@ -50,7 +52,9 @@ export default class PermaMessage
   }
 
   private async handleExistingPermaMessage(message: Message): Promise<void> {
-    assert(message.channel instanceof TextChannel);
+    if (!(message.channel instanceof TextChannel)) {
+      return;
+    }
 
     if (message.author.bot) {
       return;

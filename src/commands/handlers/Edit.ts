@@ -27,8 +27,9 @@ export default class Edit implements CommandHandler {
   async execute(interaction: ChatInputCommandInteraction): Promise<void> {
     const messageId = interaction.options.getString("message_id", true);
 
+    assert(interaction.channel, "Interaction must be in a channel context");
+
     try {
-      assert(interaction.channel);
       await interaction.channel.messages.fetch(messageId);
     } catch {
       await interaction.reply({
