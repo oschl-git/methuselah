@@ -2,7 +2,6 @@ import { Entity, PrimaryColumn } from "typeorm";
 
 export enum ChannelType {
   WELCOME = "welcome",
-  MOD_LOG = "modlog",
 }
 
 @Entity("channels")
