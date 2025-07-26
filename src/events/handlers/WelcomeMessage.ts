@@ -4,7 +4,7 @@ import * as resourceLoader from "../../resources/resourceLoader.js";
 import database from "../../data/database.js";
 import EventHandler from "./EventHandler.js";
 import logger from "../../services/logger.js";
-import WelcomeChannel from "../../data/entities/WelcomeChannel.js";
+import Channel, { ChannelType } from "../../data/entities/Channel.js";
 
 const welcomeQuotes = resourceLoader.loadYaml<string[]>("welcomeQuotes");
 
@@ -19,10 +19,11 @@ export default class WelcomeMessage
       return;
     }
 
-    const welcomeChannels = database.getRepository(WelcomeChannel);
+    const channels = database.getRepository(Channel);
 
-    const guildWelcomeChannels = await welcomeChannels.findBy({
+    const guildWelcomeChannels = await channels.findBy({
       guildId: member.guild.id,
+      type: ChannelType.WELCOME
     });
 
     for (const guildWelcomeChannel of guildWelcomeChannels) {
