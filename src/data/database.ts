@@ -8,6 +8,7 @@ export default new DataSource({
   type: "sqlite",
   database: config.get<string>("database.filename"),
   entities: [path.join(process.cwd(), "src", "data", "entities", "*.ts")],
+  migrations: [path.join(process.cwd(), "src", "data", "migrations", "*.ts")],
   logger: config.get<boolean>("database.logging")
     ? new DatabaseLogger()
     : undefined,
