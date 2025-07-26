@@ -1,6 +1,9 @@
 - definition: "ping"
   description: "a simple testing command."
 
+- sendinvite: "sendinvite [server]"
+  description: "sends an invite link to the specified server."
+
 - definition: "remindrule [number]"
   description: "reminds a server rule."
 
