@@ -17,7 +17,7 @@ export async function trackUserInteraction(
   username: string,
   interaction: UserInteraction,
 ): Promise<void> {
-  const evaluationPeriod = 10 * 1000; // @FIXME change to 60
+  const evaluationPeriod = 60 * 1000;
 
   let guildInteractions = trackedUserInteractions.get(guildId);
 
