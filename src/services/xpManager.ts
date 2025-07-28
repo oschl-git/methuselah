@@ -98,7 +98,7 @@ async function sendLevelUpNotification(
   const emoji = await emojiLoader.tryGetEmojiString("methuselah");
 
   user.send(
-    `*${emoji} ${user}, you have leveled up to **level ${newLevel}** in the **${guild.name}** community. ` +
+    `*${emoji} ${user}, you have advanced to **level ${newLevel}** in the **${guild.name}** community. ` +
       `Another step of your journey is behind you.*`,
   );
 }

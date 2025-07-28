@@ -1,6 +1,6 @@
 import { Colors, EmbedBuilder } from "discord.js";
 
-export default class ErrorEmbed extends EmbedBuilder {
+export default class SuccessEmbed extends EmbedBuilder {
   constructor(message: string) {
     super();
 
