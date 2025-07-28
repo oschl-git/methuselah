@@ -1,5 +1,5 @@
 import { Events, Message, TextChannel } from "discord.js";
-import * as levelCalculator from "../../services/levelCalculator.js";
+import * as xpManager from "../../services/xpManager.js";
 import EventHandler from "./EventHandler.js";
 
 export default class TrackUserInteraction
@@ -25,7 +25,7 @@ export default class TrackUserInteraction
       messageLength: message.content.length,
     };
 
-    await levelCalculator.trackUserInteraction(
+    await xpManager.trackUserInteraction(
       message.guildId,
       message.author.id,
       message.author.username,
