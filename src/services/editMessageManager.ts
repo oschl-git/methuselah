@@ -4,6 +4,7 @@ interface EditMessageEntry {
     userId: string;
     channelId: string;
     messageId: string;
+    timeout: ReturnType<typeof setTimeout>;
 }
 
 export const editMessageTimeout = 60;
@@ -13,9 +14,9 @@ const awaitingEdits: EditMessageEntry[] = [];
 export function addEntry(userId: string, channelId: string, messageId: string): void {
     userState.blockUserInteraction(userId);
 
-    awaitingEdits.push({ userId, channelId, messageId });
+    const timeout = setTimeout(() => removeEntry(userId, channelId, messageId), editMessageTimeout * 1000);
 
-    setTimeout(() => removeEntry(userId, channelId, messageId), editMessageTimeout * 1000);
+    awaitingEdits.push({ userId, channelId, messageId, timeout });
 }
 
 export function removeEntry(userId: string, channelId: string, messageId: string): void {
@@ -24,6 +25,7 @@ export function removeEntry(userId: string, channelId: string, messageId: string
     );
 
     if (index !== -1) {
+        clearTimeout(awaitingEdits[index].timeout);
         awaitingEdits.splice(index, 1);
     }
 

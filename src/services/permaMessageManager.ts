@@ -3,6 +3,7 @@ import * as userState from "../services/userState.js";
 interface AwaitingPermaMessageEntry {
     userId: string;
     channelId: string;
+    timeout: ReturnType<typeof setTimeout>;
 }
 
 export const awaitingPermaMessageTimeout = 60;
@@ -12,15 +13,16 @@ const awaitingPermaMessages: AwaitingPermaMessageEntry[] = [];
 export function addEntry(userId: string, channelId: string): void {
     userState.blockUserInteraction(userId);
 
-    awaitingPermaMessages.push({ userId, channelId });
+    const timeout = setTimeout(() => removeEntry(userId, channelId), awaitingPermaMessageTimeout * 1000);
 
-    setTimeout(() => removeEntry(userId, channelId), awaitingPermaMessageTimeout * 1000);
+    awaitingPermaMessages.push({ userId, channelId, timeout });
 }
 
 export function removeEntry(userId: string, channelId: string): void {
     const index = awaitingPermaMessages.findIndex((entry) => entry.userId === userId && entry.channelId === channelId);
 
     if (index !== -1) {
+        clearTimeout(awaitingPermaMessages[index].timeout);
         awaitingPermaMessages.splice(index, 1);
     }
 
