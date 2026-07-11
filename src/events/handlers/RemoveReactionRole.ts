@@ -26,10 +26,6 @@ export default class RemoveReactionRole implements EventHandler<Events.MessageRe
             return;
         }
 
-        if (user.bot) {
-            return;
-        }
-
         const emoji = reaction.emoji.id ?? reaction.emoji.name;
 
         assert(emoji !== null, "Emoji must be defined");

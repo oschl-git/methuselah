@@ -14,7 +14,7 @@ export default class Level implements CommandHandler {
 
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         if (!interaction.guildId) {
-            interaction.reply({
+            await interaction.reply({
                 embeds: [new ErrorEmbed("this command can only be used in a server.")],
                 flags: [MessageFlags.Ephemeral],
             });
@@ -47,7 +47,7 @@ export default class Level implements CommandHandler {
             `**XP:** ${userXpEntry.xp}\n` +
             `**XP needed to level up:** ${xpNeededForNextLevel}\n`;
 
-        interaction.reply({
+        await interaction.reply({
             embeds: [new InfoEmbed(content)],
         });
     }

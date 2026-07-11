@@ -62,7 +62,7 @@ export default class SetChannel implements CommandHandler {
         });
 
         if (isAlreadySet) {
-            interaction.reply({
+            await interaction.reply({
                 embeds: [new ErrorEmbed(`this channel is already a ${type} channel.`)],
                 flags: [MessageFlags.Ephemeral],
             });

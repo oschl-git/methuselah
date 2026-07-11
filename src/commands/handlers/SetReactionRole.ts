@@ -92,7 +92,7 @@ export default class SetReactionRole implements CommandHandler {
         const message = await interaction.channel?.messages.fetch(messageId);
 
         if (!message) {
-            interaction.reply({
+            await interaction.reply({
                 embeds: [new ErrorEmbed("message not found.")],
                 flags: [MessageFlags.Ephemeral],
             });

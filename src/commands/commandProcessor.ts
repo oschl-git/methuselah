@@ -37,7 +37,7 @@ async function processCommand(interaction: Interaction): Promise<void> {
         }
 
         if (userState.isUserBlocked(interaction.user.id)) {
-            interaction.reply({
+            await interaction.reply({
                 embeds: [new ErrorEmbed("a pending interaction is blocking you from taking actions.")],
                 flags: [MessageFlags.Ephemeral],
             });
@@ -51,7 +51,7 @@ async function processCommand(interaction: Interaction): Promise<void> {
         }
 
         if (await cooldownManager.isOnCooldown(interaction.commandName, interaction.user.id)) {
-            interaction.reply({
+            await interaction.reply({
                 embeds: [new CooldownEmbed(interaction.commandName)],
                 flags: [MessageFlags.Ephemeral],
             });
@@ -69,10 +69,20 @@ async function processCommand(interaction: Interaction): Promise<void> {
 
         logger.info(`[@${interaction.user.username}] executed /${interaction.commandName}`);
     } catch (error) {
-        interaction.reply({
+        const response = {
             embeds: [new ErrorEmbed("an error occured while executing command.")],
-            flags: [MessageFlags.Ephemeral],
-        });
+            flags: [MessageFlags.Ephemeral] as const,
+        };
+
+        try {
+            if (interaction.replied || interaction.deferred) {
+                await interaction.followUp(response);
+            } else {
+                await interaction.reply(response);
+            }
+        } catch (replyError) {
+            logger.error(`Failed sending error response for /${interaction.commandName}`, replyError);
+        }
 
         logger.error(`Failed executing /${interaction.commandName} used by [@${interaction.user.username}]`, error);
     }
