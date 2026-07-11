@@ -82,13 +82,6 @@ export default class SetReactionRole implements CommandHandler {
             return;
         }
 
-        const reactionRole = new ReactionRole();
-        reactionRole.messageId = messageId;
-        reactionRole.emoji = emoji;
-        reactionRole.roleId = role;
-
-        await reactionRoles.save(reactionRole);
-
         const message = await interaction.channel?.messages.fetch(messageId);
 
         if (!message) {
@@ -99,6 +92,13 @@ export default class SetReactionRole implements CommandHandler {
 
             return;
         }
+
+        const reactionRole = new ReactionRole();
+        reactionRole.messageId = messageId;
+        reactionRole.emoji = emoji;
+        reactionRole.roleId = role;
+
+        await reactionRoles.save(reactionRole);
 
         await message.react(emoji);
 

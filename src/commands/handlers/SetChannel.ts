@@ -92,6 +92,7 @@ export default class SetChannel implements CommandHandler {
         const existingChannel = await channels.findOneBy({
             channelId: interaction.channelId,
             guildId: interaction.guildId,
+            type: type,
         });
 
         if (existingChannel === null) {

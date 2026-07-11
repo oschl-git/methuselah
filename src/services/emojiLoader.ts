@@ -2,7 +2,16 @@ import { Guild } from "discord.js";
 import client from "./client.js";
 import EmojiNotFoundError from "../errors/EmojiNotFoundError.js";
 
+const emojiIdCache = new Map<string, string>();
+
 export async function getEmojiId(name: string, guild?: Guild): Promise<string> {
+    const cacheKey = `${guild?.id ?? ""}:${name}`;
+
+    const cachedId = emojiIdCache.get(cacheKey);
+    if (cachedId) {
+        return cachedId;
+    }
+
     let id = null;
 
     if (guild) {
@@ -16,6 +25,8 @@ export async function getEmojiId(name: string, guild?: Guild): Promise<string> {
     if (!id) {
         throw new EmojiNotFoundError(`Emoji not found`, name, guild?.name);
     }
+
+    emojiIdCache.set(cacheKey, id);
 
     return id;
 }
