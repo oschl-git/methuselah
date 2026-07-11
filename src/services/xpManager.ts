@@ -7,98 +7,91 @@ import logger from "./logger.js";
 import UserXp from "../data/entities/UserXp.js";
 
 export interface UserInteraction {
-  messageLength: number;
+    messageLength: number;
 }
 
-const trackedUserInteractions = new Map<
-  string,
-  Map<string, UserInteraction[]>
->();
+const trackedUserInteractions = new Map<string, Map<string, UserInteraction[]>>();
 
 export async function trackUserInteraction(
-  guildId: string,
-  userId: string,
-  username: string,
-  interaction: UserInteraction,
+    guildId: string,
+    userId: string,
+    username: string,
+    interaction: UserInteraction,
 ): Promise<void> {
-  const evaluationPeriod = 60 * 1000;
+    const evaluationPeriod = 60 * 1000;
 
-  let guildInteractions = trackedUserInteractions.get(guildId);
+    let guildInteractions = trackedUserInteractions.get(guildId);
 
-  if (!guildInteractions) {
-    const newGuildInteractions = new Map<string, UserInteraction[]>();
-    trackedUserInteractions.set(guildId, newGuildInteractions);
+    if (!guildInteractions) {
+        const newGuildInteractions = new Map<string, UserInteraction[]>();
+        trackedUserInteractions.set(guildId, newGuildInteractions);
 
-    guildInteractions = newGuildInteractions;
-  }
+        guildInteractions = newGuildInteractions;
+    }
 
-  if (!guildInteractions.has(userId)) {
-    guildInteractions.set(userId, []);
-    setTimeout(async () => {
-      await assignXp(guildId, userId, username);
-      guildInteractions.delete(userId);
-    }, evaluationPeriod);
-  }
+    if (!guildInteractions.has(userId)) {
+        guildInteractions.set(userId, []);
+        setTimeout(async () => {
+            await assignXp(guildId, userId, username);
+            guildInteractions.delete(userId);
+        }, evaluationPeriod);
+    }
 
-  trackedUserInteractions.get(guildId)?.get(userId)?.push(interaction);
+    trackedUserInteractions.get(guildId)?.get(userId)?.push(interaction);
 }
 
-async function assignXp(
-  guildId: string,
-  userId: string,
-  username: string,
-): Promise<void> {
-  const interactions = trackedUserInteractions.get(guildId)?.get(userId);
+async function assignXp(guildId: string, userId: string, username: string): Promise<void> {
+    const interactions = trackedUserInteractions.get(guildId)?.get(userId);
 
-  if (!interactions || interactions.length === 0) {
-    return;
-  }
+    if (!interactions || interactions.length === 0) {
+        return;
+    }
 
-  const xp = xpCalculator.calculateXp(interactions);
+    const xp = xpCalculator.calculateXp(interactions);
 
-  const userXp = database.getRepository(UserXp);
+    const userXp = database.getRepository(UserXp);
 
-  let userXpEntry = await userXp.findOneBy({
-    userId: userId,
-    guildId: guildId,
-  });
+    let userXpEntry = await userXp.findOneBy({
+        userId: userId,
+        guildId: guildId,
+    });
 
-  if (!userXpEntry) {
-    userXpEntry = new UserXp();
+    if (!userXpEntry) {
+        userXpEntry = new UserXp();
 
-    userXpEntry.userId = userId;
-    userXpEntry.guildId = guildId;
-  }
+        userXpEntry.userId = userId;
+        userXpEntry.guildId = guildId;
+    }
 
-  const previousLevel = levelCalculator.calculateLevel(userXpEntry.xp);
+    const previousLevel = levelCalculator.calculateLevel(userXpEntry.xp);
 
-  userXpEntry.username = username;
-  userXpEntry.xp += xp;
-  userXpEntry.messageCount += interactions.length;
+    userXpEntry.username = username;
+    userXpEntry.xp += xp;
+    userXpEntry.messageCount += interactions.length;
 
-  await userXp.save(userXpEntry);
+    await userXp.save(userXpEntry);
 
-  const newLevel = levelCalculator.calculateLevel(userXpEntry.xp);
+    const newLevel = levelCalculator.calculateLevel(userXpEntry.xp);
 
-  if (newLevel > previousLevel) {
-    sendLevelUpNotification(guildId, userId, newLevel);
-  }
+    if (newLevel > previousLevel) {
+        await sendLevelUpNotification(guildId, userId, newLevel);
+    }
 
-  logger.info(`Assigned ${xp} XP to user ${userId} in guild ${guildId}`);
+    logger.info(`Assigned ${xp} XP to user ${userId} in guild ${guildId}`);
 }
 
-async function sendLevelUpNotification(
-  guildId: string,
-  userId: string,
-  newLevel: number,
-): Promise<void> {
-  const user = await client.users.fetch(userId);
-  const guild = await client.guilds.fetch(guildId);
+async function sendLevelUpNotification(guildId: string, userId: string, newLevel: number): Promise<void> {
+    try {
+        const user = await client.users.fetch(userId);
+        const guild = await client.guilds.fetch(guildId);
 
-  const emoji = await emojiLoader.tryGetEmojiString("methuselah");
+        const emoji = await emojiLoader.tryGetEmojiString("methuselah");
 
-  user.send(
-    `*${emoji} ${user}, you have advanced to **level ${newLevel}** in the **${guild.name}** community. ` +
-      `Another step of your journey is behind you.*`,
-  );
+        await user.send(
+            `*${emoji} ${user}, you have advanced to **level ${newLevel}** in the **${guild.name}** community. ` +
+                `Another step of your journey is behind you.*`,
+        );
+    } catch (error) {
+        logger.warn(`Failed to send level-up notification to user ${userId} in guild ${guildId}`, error);
+    }
 }

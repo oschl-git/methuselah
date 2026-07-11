@@ -1,9 +1,9 @@
 import {
-  ChatInputCommandInteraction,
-  InteractionContextType,
-  MessageFlags,
-  PermissionFlagsBits,
-  SlashCommandBuilder,
+    ChatInputCommandInteraction,
+    InteractionContextType,
+    MessageFlags,
+    PermissionFlagsBits,
+    SlashCommandBuilder,
 } from "discord.js";
 import * as editMessageManager from "../../services/editMessageManager.js";
 import CommandHandler from "./CommandHandler.js";
@@ -12,47 +12,40 @@ import assert from "node:assert";
 import ErrorEmbed from "../../responses/ErrorEmbed.js";
 
 export default class Edit implements CommandHandler {
-  data = new SlashCommandBuilder()
-    .setName("edit")
-    .setDescription("Edit a message written by the bot.")
-    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
-    .setContexts(InteractionContextType.Guild)
-    .addStringOption((option) =>
-      option
-        .setName("message_id")
-        .setDescription("ID of the message to edit")
-        .setRequired(true),
-    ) as SlashCommandBuilder;
+    data = new SlashCommandBuilder()
+        .setName("edit")
+        .setDescription("Edit a message written by the bot.")
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
+        .setContexts(InteractionContextType.Guild)
+        .addStringOption((option) =>
+            option.setName("message_id").setDescription("ID of the message to edit").setRequired(true),
+        ) as SlashCommandBuilder;
 
-  async execute(interaction: ChatInputCommandInteraction): Promise<void> {
-    const messageId = interaction.options.getString("message_id", true);
+    async execute(interaction: ChatInputCommandInteraction): Promise<void> {
+        const messageId = interaction.options.getString("message_id", true);
 
-    assert(interaction.channel, "Interaction must be in a channel context");
+        assert(interaction.channel, "Interaction must be in a channel context");
 
-    try {
-      await interaction.channel.messages.fetch(messageId);
-    } catch {
-      await interaction.reply({
-        embeds: [new ErrorEmbed("message not found/invalid ID.")],
-        flags: [MessageFlags.Ephemeral],
-      });
+        try {
+            await interaction.channel.messages.fetch(messageId);
+        } catch {
+            await interaction.reply({
+                embeds: [new ErrorEmbed("message not found/invalid ID.")],
+                flags: [MessageFlags.Ephemeral],
+            });
 
-      return;
+            return;
+        }
+
+        editMessageManager.addEntry(interaction.user.id, interaction.channelId, messageId);
+
+        await interaction.reply({
+            embeds: [
+                new SuccessEmbed(
+                    `you have ${editMessageManager.editMessageTimeout} seconds to write new content for the message.`,
+                ),
+            ],
+            flags: [MessageFlags.Ephemeral],
+        });
     }
-
-    editMessageManager.addEntry(
-      interaction.user.id,
-      interaction.channelId,
-      messageId,
-    );
-
-    await interaction.reply({
-      embeds: [
-        new SuccessEmbed(
-          `you have ${editMessageManager.editMessageTimeout} seconds to write new content for the message.`,
-        ),
-      ],
-      flags: [MessageFlags.Ephemeral],
-    });
-  }
 }

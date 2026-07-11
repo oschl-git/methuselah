@@ -1,10 +1,10 @@
 export default class DiscordAttachmentFetchError extends Error {
-  emojiName?: string;
-  guildName?: string;
+    emojiName?: string;
+    guildName?: string;
 
-  constructor(message: string) {
-    super(message);
+    constructor(message: string) {
+        super(message);
 
-    this.name = "DiscordAttachmentFetchError";
-  }
+        this.name = "DiscordAttachmentFetchError";
+    }
 }

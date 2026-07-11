@@ -1,8 +1,8 @@
 import * as userState from "../services/userState.js";
 
 interface EchoMessageEntry {
-  userId: string;
-  channelId: string;
+    userId: string;
+    channelId: string;
 }
 
 export const echoMessageTimeout = 60;
@@ -10,30 +10,23 @@ export const echoMessageTimeout = 60;
 const awaitingEchoMessages: EchoMessageEntry[] = [];
 
 export function addEntry(userId: string, channelId: string): void {
-  userState.blockUserInteraction(userId);
+    userState.blockUserInteraction(userId);
 
-  awaitingEchoMessages.push({ userId, channelId });
+    awaitingEchoMessages.push({ userId, channelId });
 
-  setTimeout(() => removeEntry(userId, channelId), echoMessageTimeout * 1000);
+    setTimeout(() => removeEntry(userId, channelId), echoMessageTimeout * 1000);
 }
 
 export function removeEntry(userId: string, channelId: string): void {
-  const index = awaitingEchoMessages.findIndex(
-    (entry) => entry.userId === userId && entry.channelId === channelId,
-  );
+    const index = awaitingEchoMessages.findIndex((entry) => entry.userId === userId && entry.channelId === channelId);
 
-  if (index !== -1) {
-    awaitingEchoMessages.splice(index, 1);
-  }
+    if (index !== -1) {
+        awaitingEchoMessages.splice(index, 1);
+    }
 
-  userState.unblockUserInteraction(userId);
+    userState.unblockUserInteraction(userId);
 }
 
-export function isAwaitingEchoMessage(
-  userId: string,
-  channelId: string,
-): boolean {
-  return awaitingEchoMessages.some(
-    (entry) => entry.userId === userId && entry.channelId === channelId,
-  );
+export function isAwaitingEchoMessage(userId: string, channelId: string): boolean {
+    return awaitingEchoMessages.some((entry) => entry.userId === userId && entry.channelId === channelId);
 }

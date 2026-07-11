@@ -1,6 +1,6 @@
 {
   "name": "methuselah",
-  "version": "2.0.0-beta",
+  "version": "2.1.0-beta",
   "description": "a bot for the The Long Dark Discord server",
   "main": "index.js",
   "repository": "git@github.com:oschl-git/methuselah.git",
@@ -14,16 +14,16 @@
     "script": "tsx",
     "typeorm": "typeorm-ts-node-esm",
     "eslint": "eslint src",
-    "prettier": "prettier src --write",
-    "prettier-check": "prettier src --check"
+    "prettier": "prettier src scripts --write",
+    "prettier-check": "prettier src scripts --check"
   },
   "dependencies": {
+    "better-sqlite3": "^12.11.1",
     "config": "^4.0.1",
     "discord.js": "^14.21.0",
     "emoji-js": "^3.8.1",
     "handlebars": "^4.7.8",
     "reflect-metadata": "^0.2.2",
-    "sqlite3": "^5.1.7",
     "tslog": "^4.9.3",
     "typeorm": "^0.3.25",
     "yaml": "^2.8.0"

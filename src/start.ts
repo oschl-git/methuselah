@@ -1,4 +1,4 @@
-import { Client } from "discord.js";
+import { Client, Events } from "discord.js";
 import * as commandDeployer from "./commands/commandDeployer.js";
 import * as commandProcessor from "./commands/commandProcessor.js";
 import * as eventProcessor from "./events/eventProcessor.js";
@@ -20,23 +20,21 @@ logger.info("Loading events...");
 await eventProcessor.loadEvents(client);
 
 if (config.get<boolean>("registerCommands")) {
-  logger.info("Attempting to register commands with the Discord API...");
+    logger.info("Attempting to register commands with the Discord API...");
 
-  try {
-    const result = await commandDeployer.registerCommands();
-    logger.info(`Successfully registered ${result.length} commands`);
-  } catch (error) {
-    logger.error("Failed registering commands with the Discord API", error);
-  }
+    try {
+        const result = await commandDeployer.registerCommands();
+        logger.info(`Successfully registered ${result.length} commands`);
+    } catch (error) {
+        logger.error("Failed registering commands with the Discord API", error);
+    }
 } else {
-  logger.warn(
-    "Command registration with the Discord API is disabled in the configuration",
-  );
+    logger.warn("Command registration with the Discord API is disabled in the configuration");
 }
 
 await new Promise<void>((resolve) => {
-  if (client.isReady()) return resolve();
-  (client as Client).once("ready", () => resolve());
+    if (client.isReady()) return resolve();
+    (client as Client).once(Events.ClientReady, () => resolve());
 });
 
 logger.info(`Logged in as [@${client.user.tag}]`);
