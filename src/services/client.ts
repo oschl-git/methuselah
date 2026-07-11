@@ -1,5 +1,4 @@
-import { Client, Events, GatewayIntentBits, Partials } from "discord.js";
-import config from "config";
+import { Client, GatewayIntentBits, Partials } from "discord.js";
 
 const client = new Client({
     intents: [
@@ -11,13 +10,6 @@ const client = new Client({
         GatewayIntentBits.MessageContent,
     ],
     partials: [Partials.Channel, Partials.Message, Partials.Reaction, Partials.User],
-});
-
-await client.login(config.get<string>("token"));
-
-await new Promise<void>((resolve) => {
-    if (client.isReady()) return resolve();
-    (client as Client).once(Events.ClientReady, () => resolve());
 });
 
 export default client as Client<true>;

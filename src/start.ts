@@ -19,6 +19,9 @@ await commandProcessor.loadCommands(client);
 logger.info("Loading events...");
 await eventProcessor.loadEvents(client);
 
+logger.info("Logging in to Discord...");
+await client.login(config.get<string>("token"));
+
 if (config.get<boolean>("registerCommands")) {
     logger.info("Attempting to register commands with the Discord API...");
 
