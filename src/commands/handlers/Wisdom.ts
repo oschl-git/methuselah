@@ -12,9 +12,10 @@ export default class Wisdom implements CommandHandler {
         const wisdom = wisdoms[Math.floor(Math.random() * wisdoms.length)];
 
         const emoji = await emojiLoader.tryGetEmojiString("methuselah", interaction.guild ?? undefined);
+        const prefix = emoji ? `${emoji} ` : "";
 
         await interaction.reply({
-            content: emoji ? `${emoji} *${wisdom}*` : `*${wisdom}*`,
+            content: `${prefix}*${wisdom}*`,
         });
     }
 }
