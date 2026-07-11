@@ -5,7 +5,7 @@ export default class ReactionRole {
     @PrimaryColumn({ type: "varchar", length: 19 })
     messageId!: string;
 
-    @PrimaryColumn({ type: "varchar" })
+    @PrimaryColumn({ type: "varchar", length: 255 })
     emoji!: string;
 
     @Column({ type: "varchar", length: 19 })
