@@ -20,7 +20,8 @@ export default class TrackUserInteraction implements EventHandler<Events.Message
         }
 
         const interaction = {
-            messageLength: message.content.length,
+            content: message.content,
+            hasAttachment: message.attachments.size > 0 || message.stickers.size > 0,
         };
 
         await xpManager.trackUserInteraction(message.guildId, message.author.id, message.author.username, interaction);

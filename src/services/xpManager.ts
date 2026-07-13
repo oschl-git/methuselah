@@ -7,7 +7,8 @@ import logger from "./logger.js";
 import UserXp from "../data/entities/UserXp.js";
 
 export interface UserInteraction {
-    messageLength: number;
+    content: string;
+    hasAttachment: boolean;
 }
 
 const trackedUserInteractions = new Map<string, Map<string, UserInteraction[]>>();
