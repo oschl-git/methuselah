@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rtk ls *)",
+      "Bash(rtk read *)",
+      "Bash(git check-ignore *)",
+      "Bash(yarn eslint *)",
+      "Bash(yarn prettier-check *)",
+      "Bash(node node_modules/prettier/bin/prettier.cjs src --check)"
+    ]
+  }
+}
